@@ -13,6 +13,7 @@ module.exports = {
         'grey-666': '#666',
         'text-color': '#444444',
         'register-btn': '#dd3333',
+        'hover-submit-btn': '#dbdbdb',
       },
     },
   },

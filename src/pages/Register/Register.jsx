@@ -12,15 +12,16 @@ function Register() {
   return (
     <div className="font-source">
       <Header />
-      <div className="flex items-center flex-col px-8 py-4 mt-20">
+      <div className="flex items-center flex-col px-8 py-4 mt-20 lg:flex-row-reverse max-w-[75rem] mx-auto">
         <div className="pb-6 overflow-hidden">
-          <img className="rounded-md object-cover" src={registerImg} alt="register_img" />
+          <img className="rounded-md object-cover max-w-full h-auto" src={registerImg} alt="register_img" />
         </div>
-        <div className="w-full rounded-md border-[1px] border-solid border-[#eee] shadow-lg mb-6">
+        <div className="w-full rounded-md border-[1px] border-solid border-[#eee] shadow-lg mb-6 text-center py-4 max-w-[23.125rem] lg:mr-8">
           <form className="flex items-center justify-center flex-col" action="POST">
             <h2 className="text-xl text-text-color font-bold text-text-color py-6">Create an Account</h2>
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                required
                 className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
                 type="text"
                 placeholder="Username"
@@ -33,6 +34,7 @@ function Register() {
             </div>
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                required
                 className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
                 type="email"
                 placeholder="Email"
@@ -45,6 +47,7 @@ function Register() {
             </div>
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                required
                 className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
                 type="password"
                 placeholder="Password"
@@ -57,6 +60,7 @@ function Register() {
             </div>
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                required
                 className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
                 type="text"
                 placeholder="First Name"
@@ -69,6 +73,7 @@ function Register() {
             </div>
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                required
                 className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
                 type="text"
                 placeholder="Last Name"
@@ -81,7 +86,7 @@ function Register() {
             </div>
             <div className="w-full flex items-center px-5 pb-6">
               <input
-                className="w-full text-white font-bold bg-register-btn rounded-md py-4 cursor-pointer"
+                className="w-full text-white font-bold bg-register-btn rounded-md py-4 cursor-pointer hover:bg-hover-submit-btn hover:text-black transition-all ease-linear"
                 type="submit"
                 value="Register"
                 name="register"
@@ -89,13 +94,10 @@ function Register() {
               ></input>
             </div>
           </form>
+          <Link className="text-base text-text-color hover:underline" to="/login-page">
+            Have an account? Login
+          </Link>
         </div>
-        <Link className="text-base text-text-color" to="/login-page">
-          Have an account? Login
-        </Link>
-        <Routes>
-          <Route path="/login-page" element={<Login />} />
-        </Routes>
       </div>
       <Footer />
     </div>
