@@ -8,24 +8,26 @@ function Header() {
   const switchBtnRef = useRef();
   const switchIconRef = useRef();
 
+  const htmlElement = window.document.documentElement;
+
   const handleSwitchOn = () => {
-    console.log('On');
     switchBtnRef.current.style.backgroundColor = '#2196f3';
     switchIconRef.current.style.transform = 'translateX(100%)';
     switchIconRef.current.style.transition = 'all linear 0.2s';
+    htmlElement.classList.add('dark');
     setSwitchMode((prev) => !prev);
   };
 
   const handleSwitchOff = () => {
-    console.log('Off');
     switchBtnRef.current.style.backgroundColor = '#ccc';
     switchIconRef.current.style.transform = 'translateX(0)';
     switchIconRef.current.style.transition = 'all linear 0.2s';
+    htmlElement.classList.remove('dark');
     setSwitchMode((prev) => !prev);
   };
 
   return (
-    <header className="w-full fixed top-0 left-0 z-[100] bg-teal-100">
+    <header className="w-full fixed top-0 left-0 z-[100] bg-primary-color dark:bg-dark-mode-1">
       <nav className="flex items-center justify-between px-8 py-[0.45rem] max-w-[75rem] mx-auto">
         <div className="flex items-center">
           <picture>
@@ -40,7 +42,7 @@ function Header() {
             />
           </picture>
           <div className="cursor-pointer px-3 py-4">
-            <FontAwesomeIcon icon={faBars} className="text-lg" />
+            <FontAwesomeIcon icon={faBars} className="text-lg dark:text-white" />
           </div>
         </div>
         <div className="flex items-center h-9 w-[8.5rem] sm:w-[18.75rem] md:w-[28.125rem] lg:w-[37.5rem]">
@@ -70,7 +72,7 @@ function Header() {
             />
           </div>
           <div className="cursor-pointer px-2">
-            <FontAwesomeIcon icon={faUser} className="w-4 h-4" />
+            <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
           </div>
         </div>
       </nav>

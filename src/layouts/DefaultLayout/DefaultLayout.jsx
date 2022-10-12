@@ -3,10 +3,10 @@ import Footer from '../components/Footer';
 
 function DefaultLayout() {
   return (
-    <div className="font-source">
+    <>
       <Header />
       <Footer />
-    </div>
+    </>
   );
 }
 
