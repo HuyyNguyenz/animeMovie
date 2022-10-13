@@ -7,7 +7,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
   return (
-    <div className="font-source dark:bg-dark-mode-3">
+    <div className="dark:bg-dark-mode-3">
       <div className="flex items-center flex-col px-8 py-4 pt-24 lg:flex-row-reverse max-w-[75rem] mx-auto">
         <div className="pb-6 overflow-hidden">
           <img className="rounded-md object-cover max-w-full h-auto" src={loginImg} alt="register_img" />

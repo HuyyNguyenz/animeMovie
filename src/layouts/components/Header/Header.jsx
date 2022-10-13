@@ -1,30 +1,11 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { faBars, faCircle, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import useDarkMode from '../../../hooks/useDarkMode';
 
 function Header() {
   const [searchValue, setSearchValue] = useState('');
-  const [switchMode, setSwitchMode] = useState(true);
-  const switchBtnRef = useRef();
-  const switchIconRef = useRef();
-
-  const htmlElement = window.document.documentElement;
-
-  const handleSwitchOn = () => {
-    switchBtnRef.current.style.backgroundColor = '#2196f3';
-    switchIconRef.current.style.transform = 'translateX(100%)';
-    switchIconRef.current.style.transition = 'all linear 0.2s';
-    htmlElement.classList.add('dark');
-    setSwitchMode((prev) => !prev);
-  };
-
-  const handleSwitchOff = () => {
-    switchBtnRef.current.style.backgroundColor = '#ccc';
-    switchIconRef.current.style.transform = 'translateX(0)';
-    switchIconRef.current.style.transition = 'all linear 0.2s';
-    htmlElement.classList.remove('dark');
-    setSwitchMode((prev) => !prev);
-  };
+  const [isDarkMode, toggleDarkMode] = useDarkMode();
 
   return (
     <header className="w-full fixed top-0 left-0 z-[100] bg-primary-color dark:bg-dark-mode-1">
@@ -59,22 +40,31 @@ function Header() {
             <FontAwesomeIcon icon={faSearch} className="text-grey-666" />
           </button>
         </div>
-        <div className="flex items-center">
-          <div
-            onClick={switchMode ? handleSwitchOn : handleSwitchOff}
-            ref={switchBtnRef}
-            className="relative w-7 h-[0.9rem] bg-grey-ccc rounded-3xl cursor-pointer"
-          >
-            <FontAwesomeIcon
-              forwardedRef={switchIconRef}
-              icon={faCircle}
-              className="absolute text-white w-3 h-full ml-[0.125rem]"
-            />
+        {!isDarkMode ? (
+          <div className="flex items-center">
+            <div
+              onClick={() => toggleDarkMode()}
+              className="relative w-7 h-[0.9rem] bg-grey-ccc rounded-3xl cursor-pointer switch-off"
+            >
+              <FontAwesomeIcon icon={faCircle} className="absolute text-white w-3 h-full ml-[0.125rem] off" />
+            </div>
+            <div className="cursor-pointer px-2">
+              <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+            </div>
           </div>
-          <div className="cursor-pointer px-2">
-            <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+        ) : (
+          <div className="flex items-center">
+            <div
+              onClick={() => toggleDarkMode()}
+              className="relative w-7 h-[0.9rem] bg-grey-ccc rounded-3xl cursor-pointer switch-on"
+            >
+              <FontAwesomeIcon icon={faCircle} className="absolute text-white w-3 h-full ml-[0.125rem] on" />
+            </div>
+            <div className="cursor-pointer px-2">
+              <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+            </div>
           </div>
-        </div>
+        )}
       </nav>
     </header>
   );

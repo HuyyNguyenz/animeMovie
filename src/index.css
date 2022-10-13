@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .switch-on {
+    @apply bg-[#2196f3] !important;
+  }
+
+  .switch-off {
+    @apply bg-[#ccc] !important;
+  }
+
+  .on {
+    @apply translate-x-full transition-all ease-linear delay-100 !important;
+  }
+
+  .off {
+    @apply translate-x-0 transition-all ease-linear delay-100 !important;
+  }
+}

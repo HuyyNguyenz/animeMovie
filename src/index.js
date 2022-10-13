@@ -12,11 +12,24 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/register-page" element={<Register />} />
-        <Route path="/login-page" element={<Login />} />
+        <Route
+          path="/register-page"
+          element={
+            <DefaultLayout>
+              <Register />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/login-page"
+          element={
+            <DefaultLayout>
+              <Login />
+            </DefaultLayout>
+          }
+        />
       </Routes>
     </BrowserRouter>
-    <DefaultLayout />
   </React.StrictMode>,
 );
 
