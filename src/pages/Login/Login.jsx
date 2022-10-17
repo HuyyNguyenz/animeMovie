@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import loginImg from '../../assets/images/image-login.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,6 +8,44 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
+  // useEffect(() => {
+  //   getAccount();
+  // }, []);
+
+  const navigate = useNavigate();
+
+  const getAccount = () => {
+    axios.get('http://localhost/api/user').then((res) => {
+      for (let i = 0; i < res.data.length; i++) {
+        const validate = data.username === res.data[i].username && data.password === res.data[i].password;
+        if (validate) {
+          localStorage.setItem('user-token', res.data[i].id);
+          setTimeout(() => {
+            navigate('/');
+            window.location.reload();
+          }, 1000);
+        } else {
+          alert('Sai thông tin tài khoản');
+        }
+        break;
+      }
+    });
+  };
+
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getAccount();
+  };
+
   return (
     <div className="dark:bg-dark-mode-3">
       <div className="flex items-center flex-col px-8 py-4 pt-24 lg:flex-row-reverse max-w-[75rem] mx-auto">
@@ -13,12 +53,14 @@ function Login() {
           <img className="rounded-md object-cover max-w-full h-auto" src={loginImg} alt="register_img" />
         </div>
         <div className="w-full rounded-md border-[1px] border-solid border-[#eee] shadow-lg mb-6 text-center py-4 max-w-[23.125rem] lg:mr-8 dark:bg-dark-mode-2 dark:border-dark-mode-2">
-          <form className="flex items-center justify-center flex-col" action="POST">
+          <form onSubmit={handleSubmit} className="flex items-center justify-center flex-col" action="POST">
             <h2 className="text-xl text-text-color font-bold text-text-color py-6 dark:text-white">
               Sign in to Your Account
             </h2>
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                onChange={handleChange}
+                value={data.username}
                 required
                 className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
                 type="text"
@@ -33,7 +75,10 @@ function Login() {
 
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                onChange={handleChange}
+                value={data.password}
                 required
+                minLength={6}
                 className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
                 type="password"
                 placeholder="Password"

@@ -3,15 +3,24 @@ import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import './index.css';
+import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
+import Home from './pages/Home/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        <Route
+          path="/"
+          element={
+            <DefaultLayout>
+              <Home />
+            </DefaultLayout>
+          }
+        />
         <Route
           path="/register-page"
           element={

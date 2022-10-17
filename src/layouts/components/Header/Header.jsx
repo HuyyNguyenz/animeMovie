@@ -1,11 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import { faBars, faCircle, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useDarkMode from '../../../hooks/useDarkMode';
+import Navigation from '../Navigation/Navigation';
 
 function Header() {
+  const navigate = useNavigate();
+  const [isLogin, setLogin] = useState(() => !!localStorage.getItem('user-token'));
+  const [userData, setUserData] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const [isDarkMode, toggleDarkMode] = useDarkMode();
+  const navRef = useRef();
+
+  const handleOpenMenu = () => {
+    navRef.current.style.transform = 'translateX(0)';
+    navRef.current.style.transition = 'all linear .4s';
+    console.log(userData);
+  };
+
+  const handleLogOut = () => {
+    setTimeout(() => {
+      setLogin(!isLogin);
+      localStorage.removeItem('user-token');
+      navigate('/');
+      window.location.reload();
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const id = localStorage.getItem('user-token');
+    axios.get(`http://localhost/api/user/${id}`).then((res) => {
+      setUserData(res.data);
+    });
+  }, [isLogin]);
 
   return (
     <header className="w-full fixed top-0 left-0 z-[100] bg-primary-color dark:bg-dark-mode-1">
@@ -22,9 +52,10 @@ function Header() {
               className="h-[3.125rem]"
             />
           </picture>
-          <div className="cursor-pointer px-3 py-4">
+          <div onClick={handleOpenMenu} className="cursor-pointer px-3 py-4">
             <FontAwesomeIcon icon={faBars} className="text-lg dark:text-white" />
           </div>
+          <Navigation navRef={navRef} />
         </div>
         <div className="flex items-center h-9 w-[8.5rem] sm:w-[18.75rem] md:w-[28.125rem] lg:w-[37.5rem]">
           <input
@@ -48,9 +79,20 @@ function Header() {
             >
               <FontAwesomeIcon icon={faCircle} className="absolute text-white w-3 h-full ml-[0.125rem] off" />
             </div>
-            <div className="cursor-pointer px-2">
-              <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
-            </div>
+            {isLogin ? (
+              <div className="px-2 flex items-center">
+                <h1 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h1>
+                <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
+                  Log out
+                </button>
+              </div>
+            ) : (
+              <Link to="/login-page">
+                <div className="cursor-pointer px-2">
+                  <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+                </div>
+              </Link>
+            )}
           </div>
         ) : (
           <div className="flex items-center">
@@ -60,9 +102,20 @@ function Header() {
             >
               <FontAwesomeIcon icon={faCircle} className="absolute text-white w-3 h-full ml-[0.125rem] on" />
             </div>
-            <div className="cursor-pointer px-2">
-              <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
-            </div>
+            {isLogin ? (
+              <div className="px-2 flex items-center">
+                <h3 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h3>
+                <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
+                  Log out
+                </button>
+              </div>
+            ) : (
+              <Link to="/login-page">
+                <div className="cursor-pointer px-2">
+                  <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+                </div>
+              </Link>
+            )}
           </div>
         )}
       </nav>
