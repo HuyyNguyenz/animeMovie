@@ -41,17 +41,19 @@ function Header() {
     <header className="w-full fixed top-0 left-0 z-[100] bg-primary-color dark:bg-dark-mode-1">
       <nav className="flex items-center justify-between px-8 py-[0.45rem] max-w-[75rem] mx-auto">
         <div className="flex items-center">
-          <picture>
-            <source
-              media="(min-width:1024px)"
-              srcSet="https://demo.ramsthemes.com/projects/zettai-bs/wp-content/uploads/2021/11/zettai-logo.svg"
-            />
-            <img
-              src="https://demo.ramsthemes.com/projects/zettai-bs/wp-content/uploads/2021/11/zettai-logo-res.svg"
-              alt="logo"
-              className="h-[3.125rem]"
-            />
-          </picture>
+          <Link to="/" className="cursor-pointer">
+            <picture>
+              <source
+                media="(min-width:1024px)"
+                srcSet="https://demo.ramsthemes.com/projects/zettai-bs/wp-content/uploads/2021/11/zettai-logo.svg"
+              />
+              <img
+                src="https://demo.ramsthemes.com/projects/zettai-bs/wp-content/uploads/2021/11/zettai-logo-res.svg"
+                alt="logo"
+                className="h-[3.125rem]"
+              />
+            </picture>
+          </Link>
           <div onClick={handleOpenMenu} className="cursor-pointer px-3 py-4">
             <FontAwesomeIcon icon={faBars} className="text-lg dark:text-white" />
           </div>

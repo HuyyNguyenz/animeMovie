@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,27 +8,23 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
-  // useEffect(() => {
-  //   getAccount();
-  // }, []);
+  const usernameRef = useRef();
+  const passwordRef = useRef();
 
   const navigate = useNavigate();
 
   const getAccount = () => {
     axios.get('http://localhost/api/user').then((res) => {
-      for (let i = 0; i < res.data.length; i++) {
-        const validate = data.username === res.data[i].username && data.password === res.data[i].password;
+      res.data.forEach((user) => {
+        const validate = data.username === user.username && data.password === user.password;
         if (validate) {
-          localStorage.setItem('user-token', res.data[i].id);
+          localStorage.setItem('user-token', user.id);
           setTimeout(() => {
             navigate('/');
             window.location.reload();
           }, 1000);
-        } else {
-          alert('Sai thông tin tài khoản');
         }
-        break;
-      }
+      });
     });
   };
 
@@ -44,6 +40,8 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     getAccount();
+    console.log([usernameRef.current]);
+    console.log([passwordRef.current]);
   };
 
   return (
@@ -59,6 +57,7 @@ function Login() {
             </h2>
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                ref={usernameRef}
                 onChange={handleChange}
                 value={data.username}
                 required
@@ -75,6 +74,7 @@ function Login() {
 
             <div className="w-full flex items-center px-5 pb-3">
               <input
+                ref={passwordRef}
                 onChange={handleChange}
                 value={data.password}
                 required
