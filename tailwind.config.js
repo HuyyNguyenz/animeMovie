@@ -19,6 +19,7 @@ module.exports = {
         'read-more-btn': '#7c83fd',
         'read-more-btn-hover': '#96baff',
         'hover-submit-btn': '#dbdbdb',
+        'section-bg-color': '#f3f9f9',
         'dark-mode-1': '#191919',
         'dark-mode-2': '#202020',
         'dark-mode-3': '#232323',

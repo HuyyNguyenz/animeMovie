@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,21 +8,23 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 function Login() {
-  const usernameRef = useRef();
-  const passwordRef = useRef();
-
   const navigate = useNavigate();
+  const [checkAccount, setCheckAccount] = useState(false);
 
   const getAccount = () => {
     axios.get('http://localhost/api/user').then((res) => {
-      res.data.forEach((user) => {
-        const validate = data.username === user.username && data.password === user.password;
+      res.data.forEach((account) => {
+        const validate = data.username === account.username && data.password === account.password;
         if (validate) {
-          localStorage.setItem('user-token', user.id);
+          localStorage.setItem('user-token', account.id);
           setTimeout(() => {
             navigate('/');
             window.location.reload();
           }, 1000);
+        } else {
+          setTimeout(() => {
+            setCheckAccount(!checkAccount);
+          }, 2000);
         }
       });
     });
@@ -40,8 +42,6 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     getAccount();
-    console.log([usernameRef.current]);
-    console.log([passwordRef.current]);
   };
 
   return (
@@ -57,7 +57,6 @@ function Login() {
             </h2>
             <div className="w-full flex items-center px-5 pb-3">
               <input
-                ref={usernameRef}
                 onChange={handleChange}
                 value={data.username}
                 required
@@ -74,7 +73,6 @@ function Login() {
 
             <div className="w-full flex items-center px-5 pb-3">
               <input
-                ref={passwordRef}
                 onChange={handleChange}
                 value={data.password}
                 required
@@ -89,6 +87,14 @@ function Login() {
                 <FontAwesomeIcon className="text-xl text-text-color" icon={faEye} />
               </div>
             </div>
+
+            {checkAccount ? (
+              <div className="mb-2 text-red-400">
+                <span>Sai thông tin tài khoản!</span>
+              </div>
+            ) : (
+              ''
+            )}
 
             <div className="w-full flex items-center px-5 pb-6">
               <input
