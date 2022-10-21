@@ -136,15 +136,15 @@ function Home() {
   };
 
   return (
-    <div className="py-20 px-8 max-w-[75rem] mx-auto">
+    <div className="py-20 px-8 max-w-[75rem] mx-auto dark:bg-dark-mode-3">
       <section className="mb-10">
         <div className="flex flex-col">
           <div className="flex items-center justify-between mb-4">
-            <div className="text-xl font-bold">
+            <div className="text-xl font-bold dark:text-white">
               <h1>Just For You</h1>
             </div>
 
-            <div className="flex items-center ">
+            <div className="flex items-center dark:text-white">
               <div className="prev-btn p-2 cursor-pointer">
                 <FontAwesomeIcon icon={faArrowLeft} />
               </div>
@@ -198,16 +198,16 @@ function Home() {
         <div className="xl:max-w-[48.5rem] xl:mr-6">
           <div className="mb-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between mb-4">
-              <div className="text-xl font-bold">
+              <div className="text-xl font-bold dark:text-white">
                 <h1>Featured Reviews</h1>
               </div>
 
               <div className="sm:w-auto w-full flex items-center justify-between">
-                <div className="text-sm font-bold cursor-pointer">
+                <div className="text-sm font-bold cursor-pointer dark:text-white">
                   <span>See all</span>
                 </div>
 
-                <div className="flex items-center ">
+                <div className="flex items-center dark:text-white">
                   <div className="prev-btn p-2 cursor-pointer">
                     <FontAwesomeIcon icon={faArrowLeft} />
                   </div>
@@ -227,11 +227,11 @@ function Home() {
 
           <div className="mb-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between mb-4">
-              <div className="text-xl font-bold">
+              <div className="text-xl font-bold dark:text-white">
                 <h1>Featured PostsAll</h1>
               </div>
 
-              <div className="sm:w-auto w-full flex items-center justify-between">
+              <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
                 <div className="text-sm font-bold cursor-pointer">
                   <span>See all</span>
                 </div>
@@ -256,7 +256,7 @@ function Home() {
         </div>
 
         <div className="flex flex-col items-start justify-start">
-          <div className="text-xl font-bold mt-1 mb-4">
+          <div className="text-xl font-bold mt-1 mb-4 dark:text-white">
             <h1>Popular reads</h1>
           </div>
 
@@ -272,10 +272,10 @@ function Home() {
 
       <section>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between mb-4">
-          <div className="text-xl font-bold">
+          <div className="text-xl font-bold dark:text-white">
             <h1>New Anime Movies</h1>
           </div>
-          <div className="sm:w-auto w-full flex items-center justify-between">
+          <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
             <div className="text-sm font-bold cursor-pointer">
               <span>See all</span>
             </div>

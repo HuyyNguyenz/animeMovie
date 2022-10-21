@@ -20,7 +20,7 @@ function DefaultLayout({ children }) {
 
   return (
     <>
-      <div className="relative font-source">
+      <div className="dark:bg-dark-mode-3 relative font-source">
         <Header />
         {children}
         <Footer />

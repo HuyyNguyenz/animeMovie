@@ -23,6 +23,7 @@ module.exports = {
         'dark-mode-1': '#191919',
         'dark-mode-2': '#202020',
         'dark-mode-3': '#232323',
+        'dark-mode-4': '#3a3a3a',
         'dark-mode-hover': '#000000d9',
       },
     },

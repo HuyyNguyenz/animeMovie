@@ -2,12 +2,12 @@ import sectionImage from '../../../assets/images/image-justForYou.jpg';
 
 function SectionPreview() {
   return (
-    <div className="xl:max-w-[24.25rem] sm:mr-4 bg-section-bg-color p-5 rounded-lg cursor-pointer">
+    <div className="xl:max-w-[24.25rem] sm:mr-4 bg-section-bg-color p-5 rounded-lg cursor-pointer dark:bg-dark-mode-4">
       <div className="hover:opacity-80 transition-all mb-4">
         <img className="rounded-lg " src={sectionImage} alt="section-img" />
       </div>
 
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-start dark:text-white">
         <div className="text-xs my-2">
           <span>April 2, 2021</span>
         </div>
@@ -30,7 +30,7 @@ function SectionPreview() {
           />
         </div>
 
-        <div className="text-sm font-bold">
+        <div className="text-sm font-bold dark:text-white">
           <h3>Huyy Nguyenz</h3>
         </div>
       </div>

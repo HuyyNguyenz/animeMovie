@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function PopularPreview() {
   return (
-    <div className="w-full flex items-center bg-section-bg-color p-5 my-2 rounded-lg cursor-pointer">
+    <div className="w-full flex items-center bg-section-bg-color p-5 my-2 rounded-lg cursor-pointer dark:bg-dark-mode-4">
       <div className="block w-20 h-20">
         <img
           className="w-full h-full rounded-lg hover:opacity-80 transition-all"
@@ -11,7 +11,7 @@ function PopularPreview() {
           alt="popular-img"
         />
       </div>
-      <div className="flex-1 ml-6">
+      <div className="flex-1 ml-6 dark:text-white">
         <div className="text-base font-bold ">
           <h2>Weathering With You: What A Mistake!</h2>
         </div>

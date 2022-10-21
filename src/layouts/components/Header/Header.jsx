@@ -18,7 +18,6 @@ function Header() {
   const handleOpenMenu = () => {
     navRef.current.style.transform = 'translateX(0)';
     navRef.current.style.transition = 'all linear .4s';
-    console.log(userData);
   };
 
   const handleLogOut = () => {
