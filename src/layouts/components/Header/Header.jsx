@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 import { faBars, faCircle, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,6 @@ import useDarkMode from '../../../hooks/useDarkMode';
 import Navigation from '../Navigation/Navigation';
 
 function Header() {
-  const navigate = useNavigate();
   const [isLogin, setLogin] = useState(() => !!localStorage.getItem('user-token'));
   const [userData, setUserData] = useState({});
   const [searchValue, setSearchValue] = useState('');
@@ -24,17 +23,16 @@ function Header() {
     setTimeout(() => {
       setLogin(!isLogin);
       localStorage.removeItem('user-token');
-      navigate('/');
       window.location.reload();
     }, 1000);
   };
 
   useEffect(() => {
     const id = localStorage.getItem('user-token');
-    axios.get(`http://localhost/api/user/${id}`).then((res) => {
+    axios.get(`http://localhost/api/controller/register.php/${id}`).then((res) => {
       setUserData(res.data);
     });
-  }, [isLogin]);
+  }, []);
 
   return (
     <header className="w-full fixed top-0 left-0 z-[100] bg-primary-color dark:bg-dark-mode-1">

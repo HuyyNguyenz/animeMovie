@@ -7,6 +7,7 @@ import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home/Home';
+import DetailPost from './pages/DetailPost/DetailPost';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,6 +35,14 @@ root.render(
           element={
             <DefaultLayout>
               <Login />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/detail-post"
+          element={
+            <DefaultLayout>
+              <DetailPost />
             </DefaultLayout>
           }
         />

@@ -17,6 +17,14 @@ function Home() {
     const prevBtnList = document.querySelectorAll('.prev-btn');
     const nextBtnList = document.querySelectorAll('.next-btn');
 
+    prevList.forEach((prev) => {
+      prev.style.display = 'none';
+    });
+
+    nextList.forEach((next) => {
+      next.style.display = 'none';
+    });
+
     prevBtnList.forEach((prevBtn, index) => {
       prevBtn.addEventListener('click', () => {
         prevList[index].click();

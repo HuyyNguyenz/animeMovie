@@ -18,6 +18,10 @@ function DefaultLayout({ children }) {
     });
   }, []);
 
+  const handleScrollToTop = () => {
+    document.documentElement.scrollTop = 0;
+  };
+
   return (
     <>
       <div className="dark:bg-dark-mode-3 relative font-source">
@@ -25,11 +29,9 @@ function DefaultLayout({ children }) {
         {children}
         <Footer />
         {scrollY ? (
-          <Link to="/">
-            <button className="fixed w-8 h-8 rounded-xl bottom-8 right-4 bg-read-more-btn">
-              <FontAwesomeIcon className="text-white" icon={faArrowUp} />
-            </button>
-          </Link>
+          <button onClick={handleScrollToTop} className="fixed w-8 h-8 rounded-xl bottom-8 right-4 bg-read-more-btn">
+            <FontAwesomeIcon className="text-white" icon={faArrowUp} />
+          </button>
         ) : (
           ''
         )}

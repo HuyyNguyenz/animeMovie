@@ -23,7 +23,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost/api/register', data).then((res) => {
+    axios.post('http://localhost/api/controller/register.php', data).then((res) => {
       if (res.data.status === 1) {
         setTimeout(() => {
           alert('Đăng ký tài khoản thành công');
@@ -40,7 +40,7 @@ function Register() {
           <img className="rounded-md object-cover max-w-full h-auto" src={registerImg} alt="register_img" />
         </div>
         <div className="w-full rounded-md border-[1px] border-solid border-[#eee] shadow-lg mb-6 text-center py-4 max-w-[23.125rem] lg:mr-8 dark:bg-dark-mode-2 dark:border-dark-mode-2">
-          <form onSubmit={handleSubmit} className="flex items-center justify-center flex-col" action="POST">
+          <form onSubmit={handleSubmit} className="flex items-center justify-center flex-col" method="POST">
             <h2 className="text-xl text-text-color font-bold text-text-color py-6 dark:text-white">
               Create an Account
             </h2>

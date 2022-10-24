@@ -24,6 +24,7 @@ module.exports = {
         'dark-mode-2': '#202020',
         'dark-mode-3': '#232323',
         'dark-mode-4': '#3a3a3a',
+        'dark-mode-5': '#323232',
         'dark-mode-hover': '#000000d9',
       },
     },
