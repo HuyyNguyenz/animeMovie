@@ -149,7 +149,7 @@ function Home() {
         <div className="flex flex-col">
           <div className="flex items-center justify-between mb-4">
             <div className="text-xl font-bold dark:text-white">
-              <h1>Just For You</h1>
+              <h1>Tin Tức Đề Cử</h1>
             </div>
 
             <div className="flex items-center dark:text-white">
@@ -207,12 +207,12 @@ function Home() {
           <div className="mb-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between mb-4">
               <div className="text-xl font-bold dark:text-white">
-                <h1>Featured Reviews</h1>
+                <h1>Tin Tức Anime</h1>
               </div>
 
               <div className="sm:w-auto w-full flex items-center justify-between">
                 <div className="text-sm font-bold cursor-pointer dark:text-white">
-                  <span>See all</span>
+                  <span>Xem tất cả</span>
                 </div>
 
                 <div className="flex items-center dark:text-white">
@@ -236,12 +236,12 @@ function Home() {
           <div className="mb-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between mb-4">
               <div className="text-xl font-bold dark:text-white">
-                <h1>Featured PostsAll</h1>
+                <h1>Cosplay</h1>
               </div>
 
               <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
                 <div className="text-sm font-bold cursor-pointer">
-                  <span>See all</span>
+                  <span>Xem tất cả</span>
                 </div>
 
                 <div className="flex items-center ">
@@ -265,7 +265,7 @@ function Home() {
 
         <div className="flex flex-col items-start justify-start">
           <div className="text-xl font-bold mt-1 mb-4 dark:text-white">
-            <h1>Popular reads</h1>
+            <h1>Tin Tức Manga</h1>
           </div>
 
           <PopularPreview />
@@ -278,14 +278,45 @@ function Home() {
         </div>
       </section>
 
-      <section>
+      <section className="mb-10">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between mb-4">
           <div className="text-xl font-bold dark:text-white">
-            <h1>New Anime Movies</h1>
+            <h1>Tin Tức Nhân Vật</h1>
           </div>
           <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
             <div className="text-sm font-bold cursor-pointer">
-              <span>See all</span>
+              <span>Xem tất cả</span>
+            </div>
+
+            <div className="flex items-center ">
+              <div className="prev-btn p-2 cursor-pointer">
+                <FontAwesomeIcon icon={faArrowLeft} />
+              </div>
+              <div className="next-btn p-2 cursor-pointer">
+                <FontAwesomeIcon icon={faArrowRight} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Slider {...settings3}>
+          <SectionPreview />
+          <SectionPreview />
+          <SectionPreview />
+          <SectionPreview />
+          <SectionPreview />
+          <SectionPreview />
+        </Slider>
+      </section>
+
+      <section>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start sm:justify-between mb-4">
+          <div className="text-xl font-bold dark:text-white">
+            <h1>Văn Hoá Nhật Bản</h1>
+          </div>
+          <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
+            <div className="text-sm font-bold cursor-pointer">
+              <span>Xem tất cả</span>
             </div>
 
             <div className="flex items-center ">

@@ -2,38 +2,101 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import PopularLayout from '../../layouts/PopularLayout/PopularLayout';
 
 function DetailPost() {
   const [comment, setComment] = useState('');
+  const [typeSubmit, setTypeSubmit] = useState('Post Comment');
   const [isUserLogin] = useState(() => !!localStorage.getItem('user-token'));
   const [userData, setUserData] = useState({});
   const [commentData, setCommentData] = useState({});
+  const [isUpdate, setUpdate] = useState(false);
 
+  // When DetailPost is mounted then useEffect will be call
   useEffect(() => {
+    handleGetUser();
+    handleGetComments();
+  }, []);
+
+  const handleGetUser = () => {
     const id = localStorage.getItem('user-token');
+    // Call API get user data
     axios.get(`http://localhost/api/controller/register.php/${id}`).then((res) => {
       setUserData(res.data);
     });
+  };
+
+  const handleGetComments = () => {
+    // Call API get comment data
     axios.get('http://localhost/api/controller/comment.php').then((res) => {
       setCommentData(res.data);
     });
-  }, []);
+  };
 
-  const handleSubmit = (e) => {
+  // Get current date time
+  const handleGetCurrentDateTime = () => {
+    const today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    const dateTime = date + ' ' + time;
+
+    return dateTime;
+  };
+
+  const handlePostComment = (e) => {
     e.preventDefault();
     if (comment.length > 0 && comment.trim() !== '') {
-      const data = { content: comment, accountName: userData.username, accountId: userData.id };
-      console.log(data);
+      const datePosted = handleGetCurrentDateTime();
+      const data = { content: comment, accountName: userData.username, datePosted: datePosted, accountId: userData.id };
       axios.post('http://localhost/api/controller/comment.php', data).then((res) => {
         if (res.data.status === 1) {
-          axios.get('http://localhost/api/controller/comment.php').then((res) => {
-            setCommentData(res.data);
-          });
+          handleGetComments();
         }
       });
       setComment('');
     } else alert('Xin mời bạn nhập nội dung');
+  };
+
+  const handleDeleteComment = (id) => {
+    axios.delete(`http://localhost/api/controller/comment.php/${id}/delete`).then((res) => {
+      if (res.data.status === 1) {
+        handleGetComments();
+      }
+    });
+  };
+
+  const handleUpdateComment = (e) => {
+    e.preventDefault();
+    const commentId = localStorage.getItem('comment_id');
+    if (comment.length > 0 && comment.trim() !== '') {
+      const datePosted = handleGetCurrentDateTime();
+      const data = {
+        id: commentId,
+        content: comment,
+        accountName: userData.username,
+        datePosted: datePosted,
+        accountId: userData.id,
+      };
+      axios.put(`http://localhost/api/controller/comment.php/${commentId}/edit`, data).then((res) => {
+        if (res.data.status === 1) {
+          handleGetComments();
+        } else {
+          console.log('Failed');
+        }
+      });
+      setComment('');
+      setTypeSubmit('Post Comment');
+      localStorage.removeItem('comment_id');
+      setUpdate(false);
+    } else alert('Xin mời bạn nhập nội dung');
+  };
+
+  const handleEdit = (id, content) => {
+    setComment(content);
+    setTypeSubmit('Update Comment');
+    localStorage.setItem('comment_id', id);
+    setUpdate(true);
   };
 
   return (
@@ -200,21 +263,43 @@ function DetailPost() {
             </p>
           </div>
 
-          {Array.from(commentData).map((data, index) => (
-            <div key={index} className="flex items-start mb-4">
-              <div className="w-10 h-10 mr-2">
-                <img
-                  className="w-full h-full rounded-full"
-                  src="https://secure.gravatar.com/avatar/29a258fbb2d69d21b675424f7bf8ae90?s=100&d=mm&r=g"
-                  alt="user"
-                />
+          <div className="overflow-y-scroll max-h-[31.25rem] mb-4">
+            {Array.from(commentData).map((data) => (
+              <div key={data.id} className="flex items-start mb-4 mr-4">
+                <div className="w-10 h-10 mr-2">
+                  <img
+                    className="w-full h-full rounded-full"
+                    src="https://secure.gravatar.com/avatar/29a258fbb2d69d21b675424f7bf8ae90?s=100&d=mm&r=g"
+                    alt="user"
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <div className="flex-1 text-base bg-navbar-bg-color px-4 pt-2 pb-4 rounded-lg dark:bg-dark-mode-5">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-bold mb-1">{data.account_name}</h3>
+                      <span>{data.date_posted}</span>
+                    </div>
+                    <p className="max-w-[13.75rem] sm:max-w-[25rem] md:max-w-[17.5rem] lg:max-w-[31.25rem] break-words">
+                      {data.content}
+                    </p>
+                  </div>
+
+                  {userData.id === data.account_id ? (
+                    <div className="flex self-end">
+                      <div onClick={() => handleDeleteComment(data.id)} className="px-2 cursor-pointer">
+                        <span>Delete</span>
+                      </div>
+                      <div onClick={() => handleEdit(data.id, data.content)} className="px-2 cursor-pointer">
+                        <span>Edit</span>
+                      </div>
+                    </div>
+                  ) : (
+                    ''
+                  )}
+                </div>
               </div>
-              <div className="flex-1 text-base bg-navbar-bg-color px-4 pt-2 pb-4 rounded-lg dark:bg-dark-mode-5">
-                <h3 className="font-bold mb-1">{data.account_name}</h3>
-                <p>{data.content}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <form method="POST">
@@ -243,13 +328,19 @@ function DetailPost() {
             </div>
 
             <div className="self-end text-white bg-read-more-btn rounded-lg">
-              <input className="p-2 cursor-pointer" onClick={handleSubmit} type="submit" value="Post Comment" />
+              <input
+                className="p-2 cursor-pointer"
+                onClick={isUpdate ? handleUpdateComment : handlePostComment}
+                type="submit"
+                value={typeSubmit}
+              />
             </div>
           </div>
         </form>
       </section>
 
       <section>
+        <PopularLayout />
         <PopularLayout />
       </section>
     </div>

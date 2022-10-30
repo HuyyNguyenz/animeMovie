@@ -8,6 +8,8 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home/Home';
 import DetailPost from './pages/DetailPost/DetailPost';
+import AnimeNews from './pages/AnimeNews/AnimeNews';
+import MangaNews from './pages/MangaNews/MangaNews';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +21,22 @@ root.render(
           element={
             <DefaultLayout>
               <Home />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/tin-tuc-anime"
+          element={
+            <DefaultLayout>
+              <AnimeNews />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/tin-tuc-manga"
+          element={
+            <DefaultLayout>
+              <MangaNews />
             </DefaultLayout>
           }
         />

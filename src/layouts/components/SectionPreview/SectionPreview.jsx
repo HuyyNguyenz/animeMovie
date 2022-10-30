@@ -1,12 +1,17 @@
 import sectionImage from '../../../assets/images/image-justForYou.jpg';
 
-function SectionPreview() {
+function SectionPreview({ width, mb }) {
   return (
-    <div className="xl:max-w-[24.25rem] sm:mr-4 bg-section-bg-color p-5 rounded-lg cursor-pointer dark:bg-dark-mode-4">
+    <div
+      className={
+        width
+          ? `xl:max-w-[${width}] bg-section-bg-color p-5 rounded-lg cursor-pointer dark:bg-dark-mode-4 mb-${mb}`
+          : 'xl:max-w-[24.25rem] sm:mr-4 bg-section-bg-color p-5 rounded-lg cursor-pointer dark:bg-dark-mode-4'
+      }
+    >
       <div className="hover:opacity-80 transition-all mb-4">
         <img className="rounded-lg " src={sectionImage} alt="section-img" />
       </div>
-
       <div className="flex flex-col items-start dark:text-white">
         <div className="text-xs my-2">
           <span>April 2, 2021</span>
