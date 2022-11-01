@@ -1,9 +1,10 @@
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Spinner from '../components/Spinner/Spinner';
 
 function DefaultLayout({ children }) {
   const [scrollY, setScrollY] = useState(false);
@@ -24,18 +25,20 @@ function DefaultLayout({ children }) {
 
   return (
     <>
-      <div className="dark:bg-dark-mode-3 relative font-source">
-        <Header />
-        {children}
-        <Footer />
-        {scrollY ? (
-          <button onClick={handleScrollToTop} className="fixed w-8 h-8 rounded-xl bottom-8 right-4 bg-read-more-btn">
-            <FontAwesomeIcon className="text-white" icon={faArrowUp} />
-          </button>
-        ) : (
-          ''
-        )}
-      </div>
+      <Spinner>
+        <div className="dark:bg-dark-mode-3 relative font-source">
+          <Header />
+          {children}
+          <Footer />
+          {scrollY ? (
+            <button onClick={handleScrollToTop} className="fixed w-8 h-8 rounded-xl bottom-8 right-4 bg-read-more-btn">
+              <FontAwesomeIcon className="text-white" icon={faArrowUp} />
+            </button>
+          ) : (
+            ''
+          )}
+        </div>
+      </Spinner>
     </>
   );
 }

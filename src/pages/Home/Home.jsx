@@ -9,6 +9,7 @@ import navbarImage from '../../assets/images/image-navbar.jpg';
 import { useEffect } from 'react';
 import SectionPreview from '../../layouts/components/SectionPreview/SectionPreview';
 import PopularPreview from '../../layouts/components/PopularPreview/PopularPreview';
+import { Link } from 'react-router-dom';
 
 function Home() {
   useEffect(() => {
@@ -17,21 +18,21 @@ function Home() {
     const prevBtnList = document.querySelectorAll('.prev-btn');
     const nextBtnList = document.querySelectorAll('.next-btn');
 
-    prevList.forEach((prev) => {
+    Array.from(prevList).forEach((prev) => {
       prev.style.display = 'none';
     });
 
-    nextList.forEach((next) => {
+    Array.from(nextList).forEach((next) => {
       next.style.display = 'none';
     });
 
-    prevBtnList.forEach((prevBtn, index) => {
+    Array.from(prevBtnList).forEach((prevBtn, index) => {
       prevBtn.addEventListener('click', () => {
         prevList[index].click();
       });
     });
 
-    nextBtnList.forEach((nextBtn, index) => {
+    Array.from(nextBtnList).forEach((nextBtn, index) => {
       nextBtn.addEventListener('click', () => {
         nextList[index].click();
       });
@@ -211,9 +212,11 @@ function Home() {
               </div>
 
               <div className="sm:w-auto w-full flex items-center justify-between">
-                <div className="text-sm font-bold cursor-pointer dark:text-white">
-                  <span>Xem tất cả</span>
-                </div>
+                <Link to="/tin-tuc-anime">
+                  <div className="text-sm font-bold cursor-pointer dark:text-white">
+                    <span>Xem tất cả</span>
+                  </div>
+                </Link>
 
                 <div className="flex items-center dark:text-white">
                   <div className="prev-btn p-2 cursor-pointer">
@@ -240,9 +243,11 @@ function Home() {
               </div>
 
               <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
-                <div className="text-sm font-bold cursor-pointer">
-                  <span>Xem tất cả</span>
-                </div>
+                <Link to="/tin-tuc-cosplay">
+                  <div className="text-sm font-bold cursor-pointer">
+                    <span>Xem tất cả</span>
+                  </div>
+                </Link>
 
                 <div className="flex items-center ">
                   <div className="prev-btn p-2 cursor-pointer">
@@ -284,9 +289,11 @@ function Home() {
             <h1>Tin Tức Nhân Vật</h1>
           </div>
           <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
-            <div className="text-sm font-bold cursor-pointer">
-              <span>Xem tất cả</span>
-            </div>
+            <Link to="/tin-tuc-nhan-vat">
+              <div className="text-sm font-bold cursor-pointer">
+                <span>Xem tất cả</span>
+              </div>
+            </Link>
 
             <div className="flex items-center ">
               <div className="prev-btn p-2 cursor-pointer">
@@ -315,9 +322,11 @@ function Home() {
             <h1>Văn Hoá Nhật Bản</h1>
           </div>
           <div className="sm:w-auto w-full flex items-center justify-between dark:text-white">
-            <div className="text-sm font-bold cursor-pointer">
-              <span>Xem tất cả</span>
-            </div>
+            <Link to="/van-hoa-nhat-ban">
+              <div className="text-sm font-bold cursor-pointer">
+                <span>Xem tất cả</span>
+              </div>
+            </Link>
 
             <div className="flex items-center ">
               <div className="prev-btn p-2 cursor-pointer">

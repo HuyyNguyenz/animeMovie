@@ -78,20 +78,22 @@ function Header() {
             >
               <FontAwesomeIcon icon={faCircle} className="absolute text-white w-3 h-full ml-[0.125rem] off" />
             </div>
-            {isLogin ? (
-              <div className="px-2 flex items-center">
-                <h1 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h1>
-                <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
-                  Log out
-                </button>
-              </div>
-            ) : (
-              <Link to="/login-page">
-                <div className="cursor-pointer px-2">
-                  <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+            <div className="block">
+              {isLogin ? (
+                <div className="px-2 flex items-center">
+                  <h1 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h1>
+                  <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
+                    Log out
+                  </button>
                 </div>
-              </Link>
-            )}
+              ) : (
+                <Link to="/login-page">
+                  <div className="cursor-pointer px-2">
+                    <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+                  </div>
+                </Link>
+              )}
+            </div>
           </div>
         ) : (
           <div className="flex items-center">
@@ -101,20 +103,22 @@ function Header() {
             >
               <FontAwesomeIcon icon={faCircle} className="absolute text-white w-3 h-full ml-[0.125rem] on" />
             </div>
-            {isLogin ? (
-              <div className="px-2 flex items-center">
-                <h3 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h3>
-                <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
-                  Log out
-                </button>
-              </div>
-            ) : (
-              <Link to="/login-page">
-                <div className="cursor-pointer px-2">
-                  <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+            <div className="block">
+              {isLogin ? (
+                <div className="px-2 flex items-center">
+                  <h3 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h3>
+                  <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
+                    Log out
+                  </button>
                 </div>
-              </Link>
-            )}
+              ) : (
+                <Link to="/login-page">
+                  <div className="cursor-pointer px-2">
+                    <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
+                  </div>
+                </Link>
+              )}
+            </div>
           </div>
         )}
       </nav>
