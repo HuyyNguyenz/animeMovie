@@ -23,14 +23,14 @@ function DetailPost() {
   const handleGetUser = () => {
     const id = localStorage.getItem('user-token');
     // Call API get user data
-    axios.get(`http://localhost/api/controller/register.php/${id}`).then((res) => {
+    axios.get(`http://localhost/anime_news/admin/api/controller/register.php/${id}`).then((res) => {
       setUserData(res.data);
     });
   };
 
   const handleGetComments = () => {
     // Call API get comment data
-    axios.get('http://localhost/api/controller/comment.php').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/comment.php').then((res) => {
       setCommentData(res.data);
     });
   };
@@ -50,7 +50,7 @@ function DetailPost() {
     if (comment.length > 0 && comment.trim() !== '') {
       const datePosted = handleGetCurrentDateTime();
       const data = { content: comment, accountName: userData.username, datePosted: datePosted, accountId: userData.id };
-      axios.post('http://localhost/api/controller/comment.php', data).then((res) => {
+      axios.post('http://localhost/anime_news/admin/api/controller/comment.php', data).then((res) => {
         if (res.data.status === 1) {
           handleGetComments();
         }
@@ -60,7 +60,7 @@ function DetailPost() {
   };
 
   const handleDeleteComment = (id) => {
-    axios.delete(`http://localhost/api/controller/comment.php/${id}/delete`).then((res) => {
+    axios.delete(`http://localhost/anime_news/admin/api/controller/comment.php/${id}/delete`).then((res) => {
       if (res.data.status === 1) {
         handleGetComments();
       }
@@ -79,7 +79,7 @@ function DetailPost() {
         datePosted: datePosted,
         accountId: userData.id,
       };
-      axios.put(`http://localhost/api/controller/comment.php/${commentId}/edit`, data).then((res) => {
+      axios.put(`http://localhost/anime_news/admin/api/controller/comment.php/${commentId}/edit`, data).then((res) => {
         if (res.data.status === 1) {
           handleGetComments();
         } else {

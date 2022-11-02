@@ -29,7 +29,7 @@ function Header() {
 
   useEffect(() => {
     const id = localStorage.getItem('user-token');
-    axios.get(`http://localhost/api/controller/register.php/${id}`).then((res) => {
+    axios.get(`http://localhost/anime_news/admin/api/controller/register.php/${id}`).then((res) => {
       setUserData(res.data);
     });
   }, []);

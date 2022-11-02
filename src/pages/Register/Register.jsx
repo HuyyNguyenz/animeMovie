@@ -24,7 +24,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost/api/controller/register.php', data).then((res) => {
+    axios.post('http://localhost/anime_news/admin/api/controller/register.php', data).then((res) => {
       if (res.data.status === 1) {
         setTimeout(() => {
           alert('Đăng ký tài khoản thành công');

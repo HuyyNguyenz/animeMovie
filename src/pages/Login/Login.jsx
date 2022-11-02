@@ -13,7 +13,7 @@ function Login() {
   const [checkAccount, setCheckAccount] = useState(false);
 
   const getAccount = () => {
-    axios.get('http://localhost/api/controller/register.php').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/register.php').then((res) => {
       res.data.forEach((account) => {
         const validate = data.username === account.username && data.password === account.password;
         if (validate) {
