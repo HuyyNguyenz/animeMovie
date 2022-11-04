@@ -8,7 +8,12 @@ import useDarkMode from '../../../hooks/useDarkMode';
 import Navigation from '../Navigation/Navigation';
 
 function Header() {
-  const [isLogin, setLogin] = useState(() => !!localStorage.getItem('user-token'));
+  const [isLogin, setLogin] = useState(() => {
+    const userToken = localStorage.getItem('user_token')
+      ? localStorage.getItem('user_token')
+      : sessionStorage.getItem('user_token');
+    return !!userToken;
+  });
   const [userData, setUserData] = useState({});
   const [searchValue, setSearchValue] = useState('');
   const [isDarkMode, toggleDarkMode] = useDarkMode();
@@ -21,14 +26,22 @@ function Header() {
 
   const handleLogOut = () => {
     setTimeout(() => {
-      setLogin(!isLogin);
-      localStorage.removeItem('user-token');
-      window.location.reload();
+      if (localStorage.getItem('user_token')) {
+        localStorage.removeItem('user_token');
+        setLogin(false);
+        window.location.reload();
+      } else {
+        sessionStorage.removeItem('user_token');
+        setLogin(false);
+        window.location.reload();
+      }
     }, 1000);
   };
 
   useEffect(() => {
-    const id = localStorage.getItem('user-token');
+    const id = localStorage.getItem('user_token')
+      ? localStorage.getItem('user_token')
+      : sessionStorage.getItem('user_token');
     axios.get(`http://localhost/anime_news/admin/api/controller/register.php/${id}`).then((res) => {
       setUserData(res.data);
     });

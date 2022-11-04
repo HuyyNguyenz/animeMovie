@@ -9,7 +9,12 @@ import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 function DetailPost() {
   const [comment, setComment] = useState('');
   const [typeSubmit, setTypeSubmit] = useState('Post Comment');
-  const [isUserLogin] = useState(() => !!localStorage.getItem('user-token'));
+  const [isUserLogin] = useState(() => {
+    const userToken = localStorage.getItem('user_token')
+      ? localStorage.getItem('user_token')
+      : sessionStorage.getItem('user_token');
+    return !!userToken;
+  });
   const [userData, setUserData] = useState({});
   const [commentData, setCommentData] = useState({});
   const [isUpdate, setUpdate] = useState(false);
@@ -21,7 +26,9 @@ function DetailPost() {
   }, []);
 
   const handleGetUser = () => {
-    const id = localStorage.getItem('user-token');
+    const id = localStorage.getItem('user_token')
+      ? localStorage.getItem('user_token')
+      : sessionStorage.getItem('user_token');
     // Call API get user data
     axios.get(`http://localhost/anime_news/admin/api/controller/register.php/${id}`).then((res) => {
       setUserData(res.data);

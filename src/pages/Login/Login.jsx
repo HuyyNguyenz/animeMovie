@@ -9,41 +9,48 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 
 function Login() {
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+    remember: false,
+  });
   const navigate = useNavigate();
-  const [checkAccount, setCheckAccount] = useState(false);
 
-  const getAccount = () => {
-    axios.get('http://localhost/anime_news/admin/api/controller/register.php').then((res) => {
-      res.data.forEach((account) => {
-        const validate = data.username === account.username && data.password === account.password;
-        if (validate) {
-          localStorage.setItem('user-token', account.id);
-          setCheckAccount(false);
+  const checkAccount = () => {
+    axios.post('http://localhost/anime_news/admin/api/controller/userLogin.php', data).then((res) => {
+      if (res.data.status === 1) {
+        if (data.remember) {
+          localStorage.setItem('user_token', res.data.id);
+          sessionStorage.removeItem('user_token');
           setTimeout(() => {
             navigate('/');
             window.location.reload();
           }, 1000);
         } else {
+          sessionStorage.setItem('user_token', res.data.id);
+          localStorage.removeItem('user_token');
           setTimeout(() => {
-            setCheckAccount(true);
-          }, 2000);
+            navigate('/');
+            window.location.reload();
+          }, 1000);
         }
-      });
+      } else {
+        alert('Sai thông tin tài khoản');
+      }
     });
   };
 
-  const [data, setData] = useState({
-    username: '',
-    password: '',
-  });
-
-  const handleChange = (e) => {
+  const handleChanged = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const handleChecked = (e) => {
+    setData({ ...data, [e.target.name]: e.target.checked });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    getAccount();
+    checkAccount();
   };
 
   return (
@@ -60,7 +67,7 @@ function Login() {
               </h2>
               <div className="w-full flex items-center px-5 pb-3">
                 <input
-                  onChange={handleChange}
+                  onChange={handleChanged}
                   value={data.username}
                   required
                   className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
@@ -76,7 +83,7 @@ function Login() {
 
               <div className="w-full flex items-center px-5 pb-3">
                 <input
-                  onChange={handleChange}
+                  onChange={handleChanged}
                   value={data.password}
                   required
                   minLength={6}
@@ -91,13 +98,12 @@ function Login() {
                 </div>
               </div>
 
-              {checkAccount ? (
-                <div className="mb-2 text-red-400">
-                  <span>Sai thông tin tài khoản!</span>
-                </div>
-              ) : (
-                ''
-              )}
+              <div className="w-full flex items-center px-5 pb-3 dark:text-white">
+                <input type="checkbox" name="remember" id="remember" onChange={handleChecked} value={data.remember} />
+                <label className="ml-2" htmlFor="remember">
+                  Remember me
+                </label>
+              </div>
 
               <div className="w-full flex items-center px-5 pb-6">
                 <input

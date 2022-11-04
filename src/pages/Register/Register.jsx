@@ -18,7 +18,7 @@ function Register() {
     lastName: '',
   });
 
-  const handleChange = (e) => {
+  const handleChanged = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
@@ -48,7 +48,7 @@ function Register() {
               </h2>
               <div className="w-full flex items-center px-5 pb-3">
                 <input
-                  onChange={handleChange}
+                  onChange={handleChanged}
                   value={data.username}
                   required
                   className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
@@ -63,7 +63,7 @@ function Register() {
               </div>
               <div className="w-full flex items-center px-5 pb-3">
                 <input
-                  onChange={handleChange}
+                  onChange={handleChanged}
                   value={data.email}
                   required
                   className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
@@ -78,7 +78,7 @@ function Register() {
               </div>
               <div className="w-full flex items-center px-5 pb-3">
                 <input
-                  onChange={handleChange}
+                  onChange={handleChanged}
                   value={data.password}
                   required
                   className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
@@ -94,7 +94,7 @@ function Register() {
               </div>
               <div className="w-full flex items-center px-5 pb-3">
                 <input
-                  onChange={handleChange}
+                  onChange={handleChanged}
                   value={data.firstName}
                   required
                   className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
@@ -109,7 +109,7 @@ function Register() {
               </div>
               <div className="w-full flex items-center px-5 pb-3">
                 <input
-                  onChange={handleChange}
+                  onChange={handleChanged}
                   value={data.lastName}
                   required
                   className="outline-none w-full border-[1px] border-solid border-[#ddd] rounded-l-md border-r-transparent px-3 py-2 text-text-color"
