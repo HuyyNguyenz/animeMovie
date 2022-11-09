@@ -3,7 +3,6 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 function Spinner({ children }) {
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -15,8 +14,8 @@ function Spinner({ children }) {
   return (
     <>
       {loading ? (
-        <div className="w-full h-screen dark:bg-dark-mode-3">
-          <div className="text-center pt-[20%]">
+        <div className="spinner_container w-full h-screen dark:bg-dark-mode-3">
+          <div className="spinner_item text-center pt-[20%]">
             <ClipLoader
               loading={loading}
               color="#dd3333"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +18,7 @@ function DetailPost() {
   const [userData, setUserData] = useState({});
   const [commentData, setCommentData] = useState({});
   const [isUpdate, setUpdate] = useState(false);
+  const scrollCommentRef = useRef();
 
   // When DetailPost is mounted then useEffect will be call
   useEffect(() => {
@@ -45,7 +46,7 @@ function DetailPost() {
   // Get current date time
   const handleGetCurrentDateTime = () => {
     const today = new Date();
-    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
     const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
     const dateTime = date + ' ' + time;
 
@@ -60,6 +61,9 @@ function DetailPost() {
       axios.post('http://localhost/anime_news/admin/api/controller/comment.php', data).then((res) => {
         if (res.data.status === 1) {
           handleGetComments();
+          setTimeout(() => {
+            scrollCommentRef.current.scrollTo(0, scrollCommentRef.current.scrollHeight);
+          }, 1000);
         }
       });
       setComment('');
@@ -272,7 +276,7 @@ function DetailPost() {
               </p>
             </div>
 
-            <div className="overflow-y-scroll max-h-[31.25rem] mb-4">
+            <div ref={scrollCommentRef} className="overflow-y-scroll max-h-[31.25rem] mb-4">
               {Array.from(commentData).map((data) => (
                 <div key={data.id} className="flex items-start mb-4 mr-4">
                   <div className="w-10 h-10 mr-2">

@@ -35,7 +35,11 @@ function Login() {
           }, 1000);
         }
       } else {
-        alert('Sai thông tin tài khoản');
+        if (res.data.lock === 1) {
+          alert(res.data.message);
+        } else {
+          alert(res.data.message);
+        }
       }
     });
   };
