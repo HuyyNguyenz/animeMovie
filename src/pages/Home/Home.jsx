@@ -229,10 +229,10 @@ function Home() {
               </div>
             </div>
             <Slider {...settings2}>
+              {/* <SectionPreview />
               <SectionPreview />
               <SectionPreview />
-              <SectionPreview />
-              <SectionPreview />
+              <SectionPreview /> */}
             </Slider>
           </div>
 
@@ -260,10 +260,10 @@ function Home() {
               </div>
             </div>
             <Slider {...settings2}>
+              {/* <SectionPreview />
               <SectionPreview />
               <SectionPreview />
-              <SectionPreview />
-              <SectionPreview />
+              <SectionPreview /> */}
             </Slider>
           </div>
         </div>
@@ -307,12 +307,12 @@ function Home() {
         </div>
 
         <Slider {...settings3}>
+          {/* <SectionPreview />
           <SectionPreview />
           <SectionPreview />
           <SectionPreview />
           <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
+          <SectionPreview /> */}
         </Slider>
       </section>
 
@@ -340,12 +340,12 @@ function Home() {
         </div>
 
         <Slider {...settings3}>
+          {/* <SectionPreview />
           <SectionPreview />
           <SectionPreview />
           <SectionPreview />
           <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
+          <SectionPreview /> */}
         </Slider>
       </section>
     </div>

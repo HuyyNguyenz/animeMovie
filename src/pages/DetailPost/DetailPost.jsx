@@ -1,7 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import PopularLayout from '../../layouts/PopularLayout/PopularLayout';
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
@@ -20,7 +18,6 @@ function DetailPost() {
   const [isUpdate, setUpdate] = useState(false);
   const scrollCommentRef = useRef();
 
-  // When DetailPost is mounted then useEffect will be call
   useEffect(() => {
     handleGetUser();
     handleGetComments();
@@ -122,32 +119,10 @@ function DetailPost() {
 
             <div className="text-sm mb-4">
               <span className="italic mr-4">16:09 22/10/2022</span>
-              <span className="mr-1">224</span>lượt xem
-            </div>
-
-            <div className="flex items-center text-sm mb-4">
-              <h2 className="font-bold mr-1">Thể loại:</h2>
-              <span>Tin Tức Anime</span>
-            </div>
-
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 mr-2">
-                <img
-                  className="rounded-full"
-                  src="https://demo.ramsthemes.com/projects/zettai-bs/wp-content/uploads/2021/11/julian-wan-WNoLnJo7tS8-unsplash-150x150.jpg"
-                  alt="author"
-                />
-              </div>
-              <div className="text-base font-bold">
-                <h3>Huyy Nguyenz</h3>
-              </div>
-              <div className="p-2 cursor-pointer">
-                <FontAwesomeIcon icon={faPlus} />
-              </div>
             </div>
 
             <div className="text-base mb-4">
-              <p>
+              <p className="leading-8">
                 Trang web chính thức cho anime Mou Ippon ("Ippon" Again!) dựa trên manga của tác giả Yu Muraoka đã đăng
                 tải teaser video thứ hai cho bộ phim, đồng thời tiết lộ một số nhân vật mới
               </p>
@@ -166,106 +141,28 @@ function DetailPost() {
               ></iframe>
             </div>
 
-            <div className="text-base mb-4">
-              <span>Các diễn viên mới bao gồm:</span>
-              <ul className="ml-4">
-                <li className="list-disc">
-                  <b className="mr-1">Anna Nagase</b>
-                  trong vai Tsumugi Himeno
-                </li>
-
-                <li className="list-disc">
-                  <b className="mr-1">Yumi Uchiyama</b>
-                  trong vai Shino Natsume
-                </li>
-              </ul>
-            </div>
-
-            <div className="text-base mb-4">
-              <span>Dàn diễn viên bao gồm:</span>
-              <ul className="ml-4">
-                <li className="list-disc">
-                  <b className="mr-1">Anna Nagase</b>
-                  trong vai Tsumugi Himeno
-                </li>
-
-                <li className="list-disc">
-                  <b className="mr-1">Yumi Uchiyama</b>
-                  trong vai Shino Natsume
-                </li>
-
-                <li className="list-disc">
-                  <b className="mr-1">Anna Nagase</b>
-                  trong vai Tsumugi Himeno
-                </li>
-
-                <li className="list-disc">
-                  <b className="mr-1">Yumi Uchiyama</b>
-                  trong vai Shino Natsume
-                </li>
-              </ul>
+            <div className="mb-4">
+              <p className="leading-8">
+                Các diễn viên chính bao gồm: * Yoshitsugu Matsuoka trong vai Yuya Tenjo * Akari Kito trong vai Kaori
+                Hojo * Kaori Maeda trong vai Lexia Von Arcelia Milepensee phụ trách sản xuất anime. Phim sẽ được ra mắt
+                vào tháng 4 năm 2023. Một cánh cửa dẫn đến một thế giới khác mở ra trước mắt một cậu bé bị bắt nạt dã
+                man suốt cuộc đời. Điều này đã cho phép cậu truy cập vào tất cả mọi thứ, như khả năng gian lận và tạo ra
+                một cánh cổng cho phép cậu đi lại giữa thế giới cũ và mới của mình! Liệu kẻ bại trận này có thể xoay
+                chuyển cuộc sống của mình khi trở về nhà ...? Hiện bộ truyện đã có 1,5 triệu bản được lưu hành trên toàn
+                thế giới.{' '}
+              </p>
             </div>
 
             <div className="mb-4">
               <img
-                src="https://s199.imacdn.com/ta/2022/10/22/b65eb323371d7ba9_e7535da9dcfda585_8294316663716796734221.jpg"
-                alt="detail-img"
+                className="w-full h-full"
+                src="https://s199.imacdn.com/ta/2022/11/17/b16b2afe7fde0efc_2021ff8dbca02268_30930916686966964734221.jpg"
+                alt="img"
               />
             </div>
 
-            <div className="text-base mb-4">
-              <span>Đội ngũ sản xuất chính:</span>
-              <ul className="ml-4">
-                <li className="list-disc">
-                  Đạo diễn:
-                  <b className="ml-1">Anna Nagase</b>
-                </li>
-
-                <li className="list-disc">
-                  Studio:
-                  <b className="ml-1">Yumi Uchiyama</b>
-                </li>
-
-                <li className="list-disc">
-                  Biên dịch:
-                  <b className="ml-1">Anna Nagase</b>
-                </li>
-
-                <li className="list-disc">
-                  Thiết kế nhân vật:
-                  <b className="ml-1">Yumi Uchiyama</b>
-                </li>
-
-                <li className="list-disc">
-                  Soạn nhạc:
-                  <b className="ml-1">Yumi Uchiyama</b>
-                </li>
-              </ul>
-            </div>
-
-            <div className="text-base mb-4">
-              <p>Phim sẽ được ra mắt vào tháng Giêng năm 2023. </p>
-            </div>
-
-            <div className="mb-4">
-              <img
-                src="https://s199.imacdn.com/ta/2022/10/22/95bad5d76fd7b7df_2be63a728c9f41fc_15144016663716899734221.jpg"
-                alt="detail-img"
-              />
-            </div>
-
-            <div className="text-base mb-4">
-              <p>
-                Bộ truyện kể về Michi Sonoda, một cô bé đã lên kế hoạch bỏ judo sau giải đấu cuối cùng của cô ở trường
-                trung học. Tuy nhiên, người bạn thân nhất của cô là Sanae Takigawa đã mời cô tiếp tục học judo khi lên
-                cao trung.
-              </p>
-            </div>
-
-            <div className="text-base mb-4">
-              <p>
-                <b className="mr-1">Muraoka</b>đã ra mắt manga trên Weekly Shonen Champion vào tháng 10 năm 2018.
-              </p>
+            <div className="mb-4 text-right">
+              <span className="italic font-bold">Khang Dora</span>
             </div>
 
             <hr className="bg-grey-ccc mb-4" />

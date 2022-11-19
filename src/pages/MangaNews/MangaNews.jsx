@@ -11,14 +11,14 @@ function MangaNews() {
           </div>
           <div>
             <div className="grid grid-cols-1 gap-x-6 md:grid-cols-2 lg:grid-cols-4">
+              {/* <SectionPreview width="34.5rem" mb="6" />
               <SectionPreview width="34.5rem" mb="6" />
               <SectionPreview width="34.5rem" mb="6" />
               <SectionPreview width="34.5rem" mb="6" />
               <SectionPreview width="34.5rem" mb="6" />
               <SectionPreview width="34.5rem" mb="6" />
               <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
+              <SectionPreview width="34.5rem" mb="6" /> */}
             </div>
           </div>
         </div>

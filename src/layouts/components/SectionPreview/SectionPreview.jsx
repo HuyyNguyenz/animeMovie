@@ -1,6 +1,6 @@
-import sectionImage from '../../../assets/images/image-justForYou.jpg';
+import userImage from '../../../assets/images/user.png';
 
-function SectionPreview({ width, mb }) {
+function SectionPreview({ width, mb, data }) {
   return (
     <div
       className={
@@ -10,33 +10,33 @@ function SectionPreview({ width, mb }) {
       }
     >
       <div className="hover:opacity-80 transition-all mb-4">
-        <img className="rounded-lg " src={sectionImage} alt="section-img" />
+        <img
+          className="rounded-lg object-cover h-80 w-full"
+          src={`http://localhost/anime_news/admin/api/uploads/images/${data.image}`}
+          alt="section-img"
+        />
       </div>
       <div className="flex flex-col items-start dark:text-white">
         <div className="text-xs my-2">
-          <span>April 2, 2021</span>
+          <span>{data.date_posted}</span>
         </div>
 
         <div className="text-xl font-bold my-2">
-          <h2>Cowboy Bebop And Love Have 4 Things In Common</h2>
+          <h2>{data.title}</h2>
         </div>
 
         <div className="text-sm my-2">
-          <p>Justice visitor him entered for. Continue delicate as unlocked entirely mr relation diverted in.</p>
+          <p>{data.short_description}</p>
         </div>
       </div>
 
       <div className="flex items-center my-2">
         <div className="mr-4">
-          <img
-            className="rounded-full"
-            src="https://demo.ramsthemes.com/projects/zettai-bs/wp-content/uploads/2021/11/julian-wan-WNoLnJo7tS8-unsplash-36x36.jpg"
-            alt="author"
-          />
+          <img className="rounded-full w-8 h-8" src={userImage} alt="author" />
         </div>
 
         <div className="text-sm font-bold dark:text-white">
-          <h3>Huyy Nguyenz</h3>
+          <h3>{data.author}</h3>
         </div>
       </div>
     </div>

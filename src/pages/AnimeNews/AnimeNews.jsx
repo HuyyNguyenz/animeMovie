@@ -1,7 +1,17 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 import SectionPreview from '../../layouts/components/SectionPreview';
 
 function AnimeNews() {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/7').then((res) => {
+      setData(res.data);
+    });
+  }, []);
+
   return (
     <DefaultLayout>
       <section>
@@ -11,12 +21,9 @@ function AnimeNews() {
           </div>
           <div>
             <div className="grid grid-cols-1 gap-x-6 md:grid-cols-2">
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
+              {data
+                ? Array.from(data).map((item) => <SectionPreview data={item} key={item.id} width="34.5rem" mb="6" />)
+                : ''}
             </div>
           </div>
         </div>
