@@ -3,9 +3,11 @@ import axios from 'axios';
 
 import PopularLayout from '../../layouts/PopularLayout/PopularLayout';
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
+import { useParams } from 'react-router-dom';
 
 function DetailPost() {
   const [comment, setComment] = useState('');
+  const [news, setNews] = useState({});
   const [typeSubmit, setTypeSubmit] = useState('Post Comment');
   const [isUserLogin] = useState(() => {
     const userToken = localStorage.getItem('user_token')
@@ -17,10 +19,12 @@ function DetailPost() {
   const [commentData, setCommentData] = useState({});
   const [isUpdate, setUpdate] = useState(false);
   const scrollCommentRef = useRef();
+  const params = useParams();
 
   useEffect(() => {
     handleGetUser();
     handleGetComments();
+    handleGetNews();
   }, []);
 
   const handleGetUser = () => {
@@ -40,12 +44,18 @@ function DetailPost() {
     });
   };
 
+  const handleGetNews = () => {
+    axios.get(`http://localhost/anime_news/admin/api/controller/news.php/detail/${params.newsId}`).then((res) => {
+      setNews(res.data);
+    });
+  };
+
   // Get current date time
   const handleGetCurrentDateTime = () => {
     const today = new Date();
     const date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
     const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-    const dateTime = date + ' ' + time;
+    const dateTime = time + ' ' + date;
 
     return dateTime;
   };
@@ -114,55 +124,48 @@ function DetailPost() {
         <section className="md:flex-1 md:mr-8">
           <div className="flex flex-col">
             <div className="text-xl font-bold mb-4">
-              <h1>Anime Mou Ippon công bố teaser mới</h1>
+              <h1>{news.title}</h1>
             </div>
 
             <div className="text-sm mb-4">
-              <span className="italic mr-4">16:09 22/10/2022</span>
+              <span className="italic mr-4">{news.date_posted}</span>
             </div>
 
             <div className="text-base mb-4">
-              <p className="leading-8">
-                Trang web chính thức cho anime Mou Ippon ("Ippon" Again!) dựa trên manga của tác giả Yu Muraoka đã đăng
-                tải teaser video thứ hai cho bộ phim, đồng thời tiết lộ một số nhân vật mới
-              </p>
+              <p className="leading-8">{news.short_description}</p>
             </div>
 
-            <div className="mb-4">
-              <iframe
-                className="sm:w-[28rem] sm:h-[14rem] lg:w-[46.25rem] lg:h-[26.25rem] rounded-lg"
-                width="330"
-                height="200"
-                src="https://www.youtube.com/embed/jpiz5RLqSgw"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+            {news.youtube ? (
+              <div className="mb-4">
+                <iframe
+                  className="sm:w-[28rem] sm:h-[14rem] lg:w-[46.25rem] lg:h-[26.25rem] rounded-lg"
+                  width="330"
+                  height="200"
+                  src={news.youtube}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            ) : (
+              ''
+            )}
 
             <div className="mb-4">
-              <p className="leading-8">
-                Các diễn viên chính bao gồm: * Yoshitsugu Matsuoka trong vai Yuya Tenjo * Akari Kito trong vai Kaori
-                Hojo * Kaori Maeda trong vai Lexia Von Arcelia Milepensee phụ trách sản xuất anime. Phim sẽ được ra mắt
-                vào tháng 4 năm 2023. Một cánh cửa dẫn đến một thế giới khác mở ra trước mắt một cậu bé bị bắt nạt dã
-                man suốt cuộc đời. Điều này đã cho phép cậu truy cập vào tất cả mọi thứ, như khả năng gian lận và tạo ra
-                một cánh cổng cho phép cậu đi lại giữa thế giới cũ và mới của mình! Liệu kẻ bại trận này có thể xoay
-                chuyển cuộc sống của mình khi trở về nhà ...? Hiện bộ truyện đã có 1,5 triệu bản được lưu hành trên toàn
-                thế giới.{' '}
-              </p>
+              <p className="leading-8">{news.description}</p>
             </div>
 
             <div className="mb-4">
               <img
                 className="w-full h-full"
-                src="https://s199.imacdn.com/ta/2022/11/17/b16b2afe7fde0efc_2021ff8dbca02268_30930916686966964734221.jpg"
+                src={`http://localhost/anime_news/admin/api/uploads/images/${news.image}`}
                 alt="img"
               />
             </div>
 
             <div className="mb-4 text-right">
-              <span className="italic font-bold">Khang Dora</span>
+              <span className="italic font-bold">{news.author}</span>
             </div>
 
             <hr className="bg-grey-ccc mb-4" />

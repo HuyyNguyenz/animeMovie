@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 import SectionPreview from '../../layouts/components/SectionPreview';
+import { Link } from 'react-router-dom';
 
 function AnimeNews() {
   const [data, setData] = useState({});
@@ -22,7 +23,11 @@ function AnimeNews() {
           <div>
             <div className="grid grid-cols-1 gap-x-6 md:grid-cols-2">
               {data
-                ? Array.from(data).map((item) => <SectionPreview data={item} key={item.id} width="34.5rem" mb="6" />)
+                ? Array.from(data).map((item) => (
+                    <Link key={item.id} to={'/tin-tuc-anime/' + item.title + '/' + item.id}>
+                      <SectionPreview data={item} width="34.5rem" mb="6" />
+                    </Link>
+                  ))
                 : ''}
             </div>
           </div>

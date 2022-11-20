@@ -3,16 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import './index.css';
+import { publicRoutes } from './routes';
 import DefaultLayout from './layouts/DefaultLayout';
-import Register from './pages/Register';
-import Login from './pages/Login';
 import Home from './pages/Home';
-import DetailPost from './pages/DetailPost';
-import AnimeNews from './pages/AnimeNews';
-import MangaNews from './pages/MangaNews';
-import CharNews from './pages/CharNews';
-import CultureNews from './pages/CultureNews';
-import CosplayNews from './pages/CosplayNews';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -27,14 +20,10 @@ root.render(
             </DefaultLayout>
           }
         />
-        <Route path="/tin-tuc-anime" element={<AnimeNews />} />
-        <Route path="/tin-tuc-manga" element={<MangaNews />} />
-        <Route path="/tin-tuc-nhan-vat" element={<CharNews />} />
-        <Route path="/van-hoa-nhat-ban" element={<CultureNews />} />
-        <Route path="/tin-tuc-cosplay" element={<CosplayNews />} />
-        <Route path="/register-page" element={<Register />} />
-        <Route path="/login-page" element={<Login />} />
-        <Route path="/detail-post" element={<DetailPost />} />
+        {publicRoutes.map((route, index) => {
+          const Page = route.component;
+          return <Route key={index} path={route.path} element={Page} />;
+        })}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

@@ -24,10 +24,6 @@ function SectionPreview({ width, mb, data }) {
         <div className="text-xl font-bold my-2">
           <h2>{data.title}</h2>
         </div>
-
-        <div className="text-sm my-2">
-          <p>{data.short_description}</p>
-        </div>
       </div>
 
       <div className="flex items-center my-2">
