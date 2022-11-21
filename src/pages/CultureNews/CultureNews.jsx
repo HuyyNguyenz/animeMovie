@@ -1,7 +1,18 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import DefaultLayout from '../../layouts/DefaultLayout';
 import SectionPreview from '../../layouts/components/SectionPreview';
 
 function CultureNews() {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/11').then((res) => {
+      setData(res.data);
+    });
+  }, []);
+
   return (
     <DefaultLayout>
       <section>
@@ -11,12 +22,13 @@ function CultureNews() {
           </div>
           <div>
             <div className="grid grid-cols-1 gap-x-6 md:grid-cols-2 lg:grid-cols-3">
-              {/* <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" />
-              <SectionPreview width="34.5rem" mb="6" /> */}
+              {data
+                ? Array.from(data).map((item) => (
+                    <Link key={item.id} to={'/van-hoa-nhat-ban/' + item.title + '/' + item.id}>
+                      <SectionPreview data={item} width="34.5rem" mb="6" />
+                    </Link>
+                  ))
+                : ''}
             </div>
           </div>
         </div>

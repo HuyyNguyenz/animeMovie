@@ -1,43 +1,79 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import jfyImage from '../../assets/images/image-justForYou.jpg';
-import navbarImage from '../../assets/images/image-navbar.jpg';
-import { useEffect } from 'react';
 import SectionPreview from '../../layouts/components/SectionPreview/SectionPreview';
 import PopularPreview from '../../layouts/components/PopularPreview/PopularPreview';
-import { Link } from 'react-router-dom';
 
 function Home() {
+  const [news, setNews] = useState([]);
+
   useEffect(() => {
-    const prevList = document.querySelectorAll('.slick-prev');
-    const nextList = document.querySelectorAll('.slick-next');
-    const prevBtnList = document.querySelectorAll('.prev-btn');
-    const nextBtnList = document.querySelectorAll('.next-btn');
-
-    Array.from(prevList).forEach((prev) => {
-      prev.style.display = 'none';
-    });
-
-    Array.from(nextList).forEach((next) => {
-      next.style.display = 'none';
-    });
-
-    Array.from(prevBtnList).forEach((prevBtn, index) => {
-      prevBtn.addEventListener('click', () => {
-        prevList[index].click();
-      });
-    });
-
-    Array.from(nextBtnList).forEach((nextBtn, index) => {
-      nextBtn.addEventListener('click', () => {
-        nextList[index].click();
-      });
-    });
+    handleGetRandomNews();
   }, []);
+
+  const handleGetRandomNews = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php').then((res) => {
+      let newsRandom = [];
+      let randomArray = [];
+      for (let i = 0; i < 5; i++) {
+        let random = Math.floor(Math.random() * res.data.length);
+        randomArray.push(random);
+      }
+
+      for (let j = 0; j < randomArray.length; j++) {
+        for (let k = 1; k < randomArray.length; k++) {
+          if (randomArray[j] === randomArray[k]) {
+            randomArray.pop(randomArray[j]);
+          }
+        }
+      }
+      // newsRandom.push(res.data[random]);
+      // setNews(newsRandom);
+      console.log(randomArray);
+    });
+  };
+
+  const CustomNextArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: 'block',
+          marginRight: '30px',
+          zIndex: 10,
+          borderRadius: '100%',
+          backgroundColor: '#000000',
+        }}
+        onClick={onClick}
+      />
+    );
+  };
+
+  const CustomPrevArrow = (props) => {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          display: 'block',
+          marginLeft: '30px',
+          zIndex: 10,
+          borderRadius: '100%',
+          backgroundColor: '#000000',
+        }}
+        onClick={onClick}
+      />
+    );
+  };
 
   const settings1 = {
     dots: false,
@@ -46,6 +82,8 @@ function Home() {
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
+    nextArrow: <CustomNextArrow className="dark:text-black" />,
+    prevArrow: <CustomPrevArrow className="dark:text-black" />,
     responsive: [
       {
         breakpoint: 1024,
@@ -152,53 +190,33 @@ function Home() {
             <div className="text-xl font-bold dark:text-white">
               <h1>Tin Tức Đề Cử</h1>
             </div>
-
-            <div className="flex items-center dark:text-white">
-              <div className="prev-btn p-2 cursor-pointer">
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </div>
-              <div className="next-btn p-2 cursor-pointer">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </div>
-            </div>
           </div>
 
           <Slider {...settings1}>
-            <div className="select-none flex-grow flex-shrink-0 basis-full h-[31.25rem] relative bg-gradient-to-b from-white to-[#050404] rounded-lg">
-              <div className="w-full h-full opacity-80 overflow-hidden">
-                <img className="w-full h-full rounded-lg object-cover" src={jfyImage} alt="just for you" />
-              </div>
-              <div className="absolute left-4 bottom-4 w-full">
-                <h2 className="text-2xl font-bold text-white mb-2">The Evangelion Files</h2>
-                <button className="text-sm text-white px-2 py-1 bg-read-more-btn rounded-lg cursor-pointer hover:bg-read-more-btn-hover transition-all">
-                  Read more
-                </button>
-              </div>
-            </div>
-
-            <div className="select-none flex-grow flex-shrink-0 basis-full h-[31.25rem] relative bg-gradient-to-b from-white to-[#050404] rounded-lg">
-              <div className="w-full h-full opacity-80 overflow-hidden">
-                <img className="w-full h-full rounded-lg object-cover" src={navbarImage} alt="just for you" />
-              </div>
-              <div className="absolute left-4 bottom-4 w-full">
-                <h1 className="text-2xl font-bold text-white mb-2">The Evangelion</h1>
-                <button className="text-sm text-white px-2 py-1 bg-read-more-btn rounded-lg cursor-pointer hover:bg-read-more-btn-hover transition-all">
-                  Read more
-                </button>
-              </div>
-            </div>
-
-            <div className="select-none flex-grow flex-shrink-0 basis-full h-[31.25rem] relative bg-gradient-to-b from-white to-[#050404] rounded-lg">
-              <div className="w-full h-full opacity-80 overflow-hidden">
-                <img className="w-full h-full rounded-lg object-cover" src={jfyImage} alt="just for you" />
-              </div>
-              <div className="absolute left-4 bottom-4 w-full">
-                <h1 className="text-2xl font-bold text-white mb-2">The Files</h1>
-                <button className="text-sm text-white px-2 py-1 bg-read-more-btn rounded-lg cursor-pointer hover:bg-read-more-btn-hover transition-all">
-                  Read more
-                </button>
-              </div>
-            </div>
+            {news
+              ? news.map((newsItem) => {
+                  return (
+                    <div
+                      key={newsItem.id}
+                      className="select-none flex-grow flex-shrink-0 basis-full h-[31.25rem] relative bg-gradient-to-b from-white to-[#050404] rounded-lg"
+                    >
+                      <div className="w-full h-full opacity-80 overflow-hidden">
+                        <img
+                          className="w-full h-full rounded-lg object-center"
+                          src={`http://localhost/anime_news/admin/api/uploads/images/${newsItem.image}`}
+                          alt="just_for_you"
+                        />
+                      </div>
+                      <div className="absolute left-4 bottom-4 w-full">
+                        <h2 className="max-w-md text-2xl font-bold text-white mb-2 line-clamp-1">{newsItem.title}</h2>
+                        <button className="text-sm text-white px-2 py-1 bg-read-more-btn rounded-lg cursor-pointer hover:bg-read-more-btn-hover transition-all">
+                          Read more
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })
+              : ''}
           </Slider>
         </div>
       </section>
@@ -217,15 +235,6 @@ function Home() {
                     <span>Xem tất cả</span>
                   </div>
                 </Link>
-
-                <div className="flex items-center dark:text-white">
-                  <div className="prev-btn p-2 cursor-pointer">
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                  </div>
-                  <div className="next-btn p-2 cursor-pointer">
-                    <FontAwesomeIcon icon={faArrowRight} />
-                  </div>
-                </div>
               </div>
             </div>
             <Slider {...settings2}>
@@ -248,15 +257,6 @@ function Home() {
                     <span>Xem tất cả</span>
                   </div>
                 </Link>
-
-                <div className="flex items-center ">
-                  <div className="prev-btn p-2 cursor-pointer">
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                  </div>
-                  <div className="next-btn p-2 cursor-pointer">
-                    <FontAwesomeIcon icon={faArrowRight} />
-                  </div>
-                </div>
               </div>
             </div>
             <Slider {...settings2}>
@@ -294,15 +294,6 @@ function Home() {
                 <span>Xem tất cả</span>
               </div>
             </Link>
-
-            <div className="flex items-center ">
-              <div className="prev-btn p-2 cursor-pointer">
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </div>
-              <div className="next-btn p-2 cursor-pointer">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </div>
-            </div>
           </div>
         </div>
 
@@ -327,15 +318,6 @@ function Home() {
                 <span>Xem tất cả</span>
               </div>
             </Link>
-
-            <div className="flex items-center ">
-              <div className="prev-btn p-2 cursor-pointer">
-                <FontAwesomeIcon icon={faArrowLeft} />
-              </div>
-              <div className="next-btn p-2 cursor-pointer">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </div>
-            </div>
           </div>
         </div>
 

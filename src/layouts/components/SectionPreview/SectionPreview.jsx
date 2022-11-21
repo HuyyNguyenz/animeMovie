@@ -17,12 +17,16 @@ function SectionPreview({ width, mb, data }) {
         />
       </div>
       <div className="flex flex-col items-start dark:text-white">
-        <div className="text-xs my-2">
+        <div className="text-sm my-2">
           <span>{data.date_posted}</span>
         </div>
 
         <div className="text-xl font-bold my-2">
           <h2>{data.title}</h2>
+        </div>
+
+        <div className="text-base my-2 line-clamp-3">
+          <h2>{data.short_description}</h2>
         </div>
       </div>
 
