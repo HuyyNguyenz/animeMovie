@@ -1,19 +1,20 @@
+import { Link } from 'react-router-dom';
 import PopularPreview from '../components/PopularPreview/PopularPreview';
 
-function PopularLayout() {
+function PopularLayout({ data, title }) {
   return (
     <div className="flex flex-col items-start justify-start">
-      <div className="text-xl font-bold mt-1 mb-4 dark:text-white">
-        <h1>Popular reads</h1>
+      <div className="text-xl font-bold mb-4 dark:text-white">
+        <h1>{title}</h1>
       </div>
 
-      <PopularPreview />
-      <PopularPreview />
-      <PopularPreview />
-      <PopularPreview />
-      <PopularPreview />
-      <PopularPreview />
-      <PopularPreview />
+      {data.map((item) => {
+        return (
+          <Link key={item.id} to={`/tin-tuc-manga/${item.title}/${item.id}`}>
+            <PopularPreview data={item} />
+          </Link>
+        );
+      })}
     </div>
   );
 }

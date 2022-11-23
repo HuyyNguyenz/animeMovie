@@ -21,7 +21,7 @@ function SectionPreview({ width, mb, data }) {
           <span>{data.date_posted}</span>
         </div>
 
-        <div className="text-xl font-bold my-2">
+        <div className="text-xl font-bold my-2 line-clamp-2">
           <h2>{data.title}</h2>
         </div>
 

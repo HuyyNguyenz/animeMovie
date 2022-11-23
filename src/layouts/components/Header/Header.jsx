@@ -101,7 +101,7 @@ function Header() {
                 </div>
               ) : (
                 <Link to="/login-page">
-                  <div className="cursor-pointer px-2">
+                  <div className="cursor-pointer pl-2">
                     <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
                   </div>
                 </Link>
@@ -126,7 +126,7 @@ function Header() {
                 </div>
               ) : (
                 <Link to="/login-page">
-                  <div className="cursor-pointer px-2">
+                  <div className="cursor-pointer pl-2">
                     <FontAwesomeIcon icon={faUser} className="w-4 h-4 dark:text-white" />
                   </div>
                 </Link>

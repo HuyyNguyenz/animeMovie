@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import PopularLayout from '../../layouts/PopularLayout/PopularLayout';
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
-import { useParams } from 'react-router-dom';
 
 function DetailPost() {
   const [comment, setComment] = useState('');
   const [news, setNews] = useState({});
+  const [suggestNews, setSuggestNews] = useState([]);
   const [typeSubmit, setTypeSubmit] = useState('Post Comment');
   const [isUserLogin] = useState(() => {
     const userToken = localStorage.getItem('user_token')
@@ -25,6 +26,7 @@ function DetailPost() {
     handleGetUser();
     handleGetComments();
     handleGetNews();
+    handleGetSuggestNews();
   }, []);
 
   const handleGetUser = () => {
@@ -50,6 +52,25 @@ function DetailPost() {
     });
   };
 
+  const handleGetSuggestNews = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php').then((res) => {
+      let randomArray = [];
+      let randomNews = [];
+      for (let i = 0; i < 10; i++) {
+        let random = Math.floor(Math.random() * res.data.length);
+        if (randomArray.indexOf(random) > -1) {
+          i--;
+        } else {
+          randomArray.push(random);
+        }
+      }
+      randomArray.forEach((rand) => {
+        randomNews.push(res.data[rand]);
+      });
+      setSuggestNews(randomNews);
+    });
+  };
+
   // Get current date time
   const handleGetCurrentDateTime = () => {
     const today = new Date();
@@ -64,7 +85,13 @@ function DetailPost() {
     e.preventDefault();
     if (comment.length > 0 && comment.trim() !== '') {
       const datePosted = handleGetCurrentDateTime();
-      const data = { content: comment, accountName: userData.username, datePosted: datePosted, accountId: userData.id };
+      const data = {
+        content: comment,
+        accountName: userData.username,
+        datePosted: datePosted,
+        accountId: userData.id,
+        newsId: news.id,
+      };
       axios.post('http://localhost/anime_news/admin/api/controller/comment.php', data).then((res) => {
         if (res.data.status === 1) {
           handleGetComments();
@@ -121,7 +148,7 @@ function DetailPost() {
   return (
     <DefaultLayout>
       <div className="py-20 px-8 max-w-[75rem] mx-auto md:flex dark:text-white">
-        <section className="md:flex-1 md:mr-8">
+        <section className="max-w-[46.25rem] md:mr-8">
           <div className="flex flex-col">
             <div className="text-xl font-bold mb-4">
               <h1>{news.title}</h1>
@@ -239,22 +266,25 @@ function DetailPost() {
                   />
                 )}
               </div>
-
-              <div className="self-end text-white bg-read-more-btn rounded-lg">
-                <input
-                  className="p-2 cursor-pointer"
-                  onClick={isUpdate ? handleUpdateComment : handlePostComment}
-                  type="submit"
-                  value={typeSubmit}
-                />
-              </div>
+              {isUserLogin ? (
+                <div className="self-end text-white bg-read-more-btn rounded-lg">
+                  <button
+                    className="p-2 cursor-pointer"
+                    onClick={isUpdate ? handleUpdateComment : handlePostComment}
+                    type="submit"
+                  >
+                    {typeSubmit}
+                  </button>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           </form>
         </section>
 
-        <section>
-          <PopularLayout />
-          <PopularLayout />
+        <section className="md:flex-1">
+          <PopularLayout data={suggestNews} title="Tin Tức Gợi Ý" />
         </section>
       </div>
     </DefaultLayout>

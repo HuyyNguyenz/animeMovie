@@ -1,19 +1,19 @@
 import { faComment } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function PopularPreview() {
+function PopularPreview({ data }) {
   return (
-    <div className="w-full flex items-center bg-section-bg-color p-5 my-2 rounded-lg cursor-pointer dark:bg-dark-mode-4">
+    <div className="w-full flex items-center bg-section-bg-color p-5 mb-4 rounded-lg cursor-pointer dark:bg-dark-mode-4">
       <div className="block w-20 h-20">
         <img
           className="w-full h-full rounded-lg hover:opacity-80 transition-all"
-          src="https://demo.ramsthemes.com/projects/zettai-bs/wp-content/uploads/2021/09/weathering-1_x4b4.h720-450x450.jpg"
+          src={`http://localhost/anime_news/admin/api/uploads/images/${data.image}`}
           alt="popular-img"
         />
       </div>
       <div className="flex-1 ml-6 dark:text-white">
-        <div className="text-base font-bold ">
-          <h2>Weathering With You: What A Mistake!</h2>
+        <div className="text-base font-bold line-clamp-2">
+          <h2>{data.title}</h2>
         </div>
 
         <div className="flex items-center ">

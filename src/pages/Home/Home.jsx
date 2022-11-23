@@ -5,37 +5,121 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SectionPreview from '../../layouts/components/SectionPreview/SectionPreview';
-import PopularPreview from '../../layouts/components/PopularPreview/PopularPreview';
+import PopularLayout from '../../layouts/PopularLayout/PopularLayout';
 
 function Home() {
   const [news, setNews] = useState([]);
+  const [mangaNews, setMangaNews] = useState([]);
+  const [animeNews, setAnimeNews] = useState([]);
+  const [cosplayNews, setCosplayNews] = useState([]);
+  const [charactersNews, setCharactersNews] = useState([]);
+  const [cultureNews, setCultureNews] = useState([]);
+  const [path, setPath] = useState([]);
 
   useEffect(() => {
     handleGetRandomNews();
+    handleGetMangaNews();
+    handleGetAnimeNews();
+    handleGetCosplayNews();
+    handleGetCharactersNews();
+    handleGetCultureNews();
   }, []);
 
   const handleGetRandomNews = () => {
     axios.get('http://localhost/anime_news/admin/api/controller/news.php').then((res) => {
-      let newsRandom = [];
       let randomArray = [];
+      let randomNews = [];
       for (let i = 0; i < 5; i++) {
         let random = Math.floor(Math.random() * res.data.length);
-        randomArray.push(random);
-      }
-
-      for (let j = 0; j < randomArray.length; j++) {
-        for (let k = 1; k < randomArray.length; k++) {
-          if (randomArray[j] === randomArray[k]) {
-            randomArray.pop(randomArray[j]);
-          }
+        if (randomArray.indexOf(random) > -1) {
+          i--;
+        } else {
+          randomArray.push(random);
         }
       }
-      // newsRandom.push(res.data[random]);
-      // setNews(newsRandom);
-      console.log(randomArray);
+      randomArray.forEach((rand) => {
+        randomNews.push(res.data[rand]);
+      });
+      setNews(randomNews);
+      const pathArray = [];
+      randomNews.forEach((news) => {
+        switch (news.category_id) {
+          case '7':
+            pathArray.push({ category_id: '7', to: `/tin-tuc-anime/${news.title}/${news.id}` });
+            break;
+          case '9':
+            pathArray.push({
+              category_id: '9',
+              to: `/tin-tuc-nhan-vat/${news.title}/${news.id}`,
+            });
+            break;
+          case '10':
+            pathArray.push({
+              category_id: '10',
+              to: `/tin-tuc-manga/${news.title}/${news.id}`,
+            });
+            break;
+          case '11':
+            pathArray.push({
+              category_id: '11',
+              to: `/van-hoa-nhat-ban/${news.title}/${news.id}`,
+            });
+            break;
+          case '12':
+            pathArray.push({
+              category_id: '12',
+              to: `/tin-tuc-cosplay/${news.title}/${news.id}`,
+            });
+            break;
+          default:
+            break;
+        }
+      });
+      setPath(pathArray);
+    });
+  };
+
+  const handleGetMangaNews = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/10').then((res) => {
+      let randomArray = [];
+      let randomNews = [];
+      for (let i = 0; i < 6; i++) {
+        let random = Math.floor(Math.random() * res.data.length);
+        if (randomArray.indexOf(random) > -1) {
+          i--;
+        } else {
+          randomArray.push(random);
+        }
+      }
+      randomArray.forEach((rand) => {
+        randomNews.push(res.data[rand]);
+      });
+      setMangaNews(randomNews);
+    });
+  };
+
+  const handleGetAnimeNews = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/7').then((res) => {
+      setAnimeNews(res.data);
+    });
+  };
+
+  const handleGetCosplayNews = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/12').then((res) => {
+      setCosplayNews(res.data);
+    });
+  };
+
+  const handleGetCharactersNews = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/9').then((res) => {
+      setCharactersNews(res.data);
+    });
+  };
+
+  const handleGetCultureNews = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/11').then((res) => {
+      setCultureNews(res.data);
     });
   };
 
@@ -50,7 +134,7 @@ function Home() {
           marginRight: '30px',
           zIndex: 10,
           borderRadius: '100%',
-          backgroundColor: '#000000',
+          backgroundColor: '#aaaaaa',
         }}
         onClick={onClick}
       />
@@ -68,7 +152,7 @@ function Home() {
           marginLeft: '30px',
           zIndex: 10,
           borderRadius: '100%',
-          backgroundColor: '#000000',
+          backgroundColor: '#aaaaaa',
         }}
         onClick={onClick}
       />
@@ -82,6 +166,7 @@ function Home() {
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
+    autoplay: true,
     nextArrow: <CustomNextArrow className="dark:text-black" />,
     prevArrow: <CustomPrevArrow className="dark:text-black" />,
     responsive: [
@@ -119,6 +204,8 @@ function Home() {
     slidesToShow: 2,
     slidesToScroll: 1,
     initialSlide: 0,
+    nextArrow: <CustomNextArrow className="dark:text-black" />,
+    prevArrow: <CustomPrevArrow className="dark:text-black" />,
     responsive: [
       {
         breakpoint: 1024,
@@ -151,9 +238,11 @@ function Home() {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 3,
     slidesToScroll: 1,
     initialSlide: 0,
+    nextArrow: <CustomNextArrow className="dark:text-black" />,
+    prevArrow: <CustomPrevArrow className="dark:text-black" />,
     responsive: [
       {
         breakpoint: 1024,
@@ -194,7 +283,7 @@ function Home() {
 
           <Slider {...settings1}>
             {news
-              ? news.map((newsItem) => {
+              ? news.map((newsItem, index) => {
                   return (
                     <div
                       key={newsItem.id}
@@ -209,9 +298,15 @@ function Home() {
                       </div>
                       <div className="absolute left-4 bottom-4 w-full">
                         <h2 className="max-w-md text-2xl font-bold text-white mb-2 line-clamp-1">{newsItem.title}</h2>
-                        <button className="text-sm text-white px-2 py-1 bg-read-more-btn rounded-lg cursor-pointer hover:bg-read-more-btn-hover transition-all">
-                          Read more
-                        </button>
+                        {newsItem.category_id === path[index].category_id ? (
+                          <Link to={path[index].to}>
+                            <button className="text-sm text-white px-2 py-1 bg-read-more-btn rounded-lg cursor-pointer hover:bg-read-more-btn-hover transition-all">
+                              Đọc thêm
+                            </button>
+                          </Link>
+                        ) : (
+                          ''
+                        )}
                       </div>
                     </div>
                   );
@@ -238,10 +333,13 @@ function Home() {
               </div>
             </div>
             <Slider {...settings2}>
-              {/* <SectionPreview />
-              <SectionPreview />
-              <SectionPreview />
-              <SectionPreview /> */}
+              {animeNews.map((news) => {
+                return (
+                  <Link key={news.id} to={`/tin-tuc-anime/${news.title}/${news.id}`}>
+                    <SectionPreview data={news} />
+                  </Link>
+                );
+              })}
             </Slider>
           </div>
 
@@ -260,27 +358,18 @@ function Home() {
               </div>
             </div>
             <Slider {...settings2}>
-              {/* <SectionPreview />
-              <SectionPreview />
-              <SectionPreview />
-              <SectionPreview /> */}
+              {cosplayNews.map((news) => {
+                return (
+                  <Link key={news.id} to={`/tin-tuc-cosplay/${news.title}/${news.id}`}>
+                    <SectionPreview data={news} />
+                  </Link>
+                );
+              })}
             </Slider>
           </div>
         </div>
 
-        <div className="flex flex-col items-start justify-start">
-          <div className="text-xl font-bold mt-1 mb-4 dark:text-white">
-            <h1>Tin Tức Manga</h1>
-          </div>
-
-          <PopularPreview />
-          <PopularPreview />
-          <PopularPreview />
-          <PopularPreview />
-          <PopularPreview />
-          <PopularPreview />
-          <PopularPreview />
-        </div>
+        <PopularLayout data={mangaNews} title="Tin Tức Manga" />
       </section>
 
       <section className="mb-10">
@@ -298,12 +387,13 @@ function Home() {
         </div>
 
         <Slider {...settings3}>
-          {/* <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
-          <SectionPreview /> */}
+          {charactersNews.map((news) => {
+            return (
+              <Link key={news.id} to={`/tin-tuc-nhan-vat/${news.title}/${news.id}`}>
+                <SectionPreview data={news} />
+              </Link>
+            );
+          })}
         </Slider>
       </section>
 
@@ -322,12 +412,13 @@ function Home() {
         </div>
 
         <Slider {...settings3}>
-          {/* <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
-          <SectionPreview />
-          <SectionPreview /> */}
+          {cultureNews.map((news) => {
+            return (
+              <Link key={news.id} to={`/van-hoa-nhat-ban/${news.title}/${news.id}`}>
+                <SectionPreview data={news} />
+              </Link>
+            );
+          })}
         </Slider>
       </section>
     </div>
