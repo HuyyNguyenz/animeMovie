@@ -1,7 +1,17 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import { faComment } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function PopularPreview({ data }) {
+  const [commentLength, setCommentLength] = useState('');
+  useEffect(() => {
+    axios.get(`http://localhost/anime_news/admin/api/controller/comment.php/${data.id}`).then((res) => {
+      setCommentLength(res.data.length);
+    });
+  }, [data]);
+
   return (
     <div className="w-full flex items-center bg-section-bg-color p-5 mb-4 rounded-lg cursor-pointer dark:bg-dark-mode-4">
       <div className="block w-20 h-20">
@@ -21,7 +31,7 @@ function PopularPreview({ data }) {
             <FontAwesomeIcon icon={faComment} />
           </div>
           <div className="text-sm">
-            <span>5 comments</span>
+            <span>{commentLength} comments</span>
           </div>
         </div>
       </div>

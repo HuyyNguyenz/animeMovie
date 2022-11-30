@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import PopularLayout from '../../layouts/PopularLayout/PopularLayout';
-import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
+import PopularLayout from '../../layouts/PopularLayout';
+import DefaultLayout from '../../layouts/DefaultLayout';
 
 function DetailPost() {
   const [comment, setComment] = useState('');
@@ -27,7 +27,7 @@ function DetailPost() {
     handleGetComments();
     handleGetNews();
     handleGetSuggestNews();
-  }, []);
+  }, [news.id, params]);
 
   const handleGetUser = () => {
     const id = localStorage.getItem('user_token')
@@ -41,9 +41,11 @@ function DetailPost() {
 
   const handleGetComments = () => {
     // Call API get comment data
-    axios.get('http://localhost/anime_news/admin/api/controller/comment.php').then((res) => {
-      setCommentData(res.data);
-    });
+    if (news.id) {
+      axios.get(`http://localhost/anime_news/admin/api/controller/comment.php/${news.id}`).then((res) => {
+        setCommentData(res.data);
+      });
+    }
   };
 
   const handleGetNews = () => {
@@ -146,7 +148,7 @@ function DetailPost() {
   };
 
   return (
-    <DefaultLayout>
+    <DefaultLayout loading={params}>
       <div className="py-20 px-8 max-w-[75rem] mx-auto md:flex dark:text-white">
         <section className="max-w-[46.25rem] md:mr-8">
           <div className="flex flex-col">

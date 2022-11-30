@@ -9,8 +9,28 @@ function PopularLayout({ data, title }) {
       </div>
 
       {data.map((item) => {
+        let path = '';
+        switch (item.category_id) {
+          case '7':
+            path = 'tin-tuc-anime';
+            break;
+          case '9':
+            path = 'tin-tuc-nhan-vat';
+            break;
+          case '10':
+            path = 'tin-tuc-manga';
+            break;
+          case '11':
+            path = 'van-hoa-nhat-ban';
+            break;
+          case '12':
+            path = 'tin-tuc-cosplay';
+            break;
+          default:
+            break;
+        }
         return (
-          <Link key={item.id} to={`/tin-tuc-manga/${item.title}/${item.id}`}>
+          <Link key={item.id} to={`/${path}/${item.title}/${item.id}`}>
             <PopularPreview data={item} />
           </Link>
         );

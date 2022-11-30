@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-function Spinner({ children }) {
+function Spinner({ children, isLoading }) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
@@ -9,7 +9,7 @@ function Spinner({ children }) {
       document.documentElement.scrollTop = 0;
       setLoading(false);
     }, 1000);
-  }, []);
+  }, [isLoading]);
 
   return (
     <>

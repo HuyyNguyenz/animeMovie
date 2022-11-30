@@ -6,13 +6,13 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Spinner from '../components/Spinner/Spinner';
 
-function DefaultLayout({ children }) {
+function DefaultLayout({ children, loading }) {
   const [scrollY, setScrollY] = useState(false);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        setScrollY(!scrollY);
+      if (window.scrollY > 500) {
+        setScrollY(true);
       } else {
         setScrollY(false);
       }
@@ -25,7 +25,7 @@ function DefaultLayout({ children }) {
 
   return (
     <>
-      <Spinner>
+      <Spinner isLoading={loading}>
         <div className="dark:bg-dark-mode-3 relative font-source">
           <Header />
           {children}

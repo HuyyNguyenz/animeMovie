@@ -1,31 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
 import { publicRoutes } from './routes';
-import DefaultLayout from './layouts/DefaultLayout';
-import Home from './pages/Home';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <DefaultLayout>
-              <Home />
-            </DefaultLayout>
-          }
-        />
         {publicRoutes.map((route, index) => {
           const Page = route.component;
           return <Route key={index} path={route.path} element={Page} />;
         })}
       </Routes>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 );
 

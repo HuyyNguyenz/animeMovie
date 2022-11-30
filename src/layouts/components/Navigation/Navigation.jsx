@@ -1,9 +1,20 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
 import navbarImage from '../../../assets/images/image-navbar.jpg';
 
 function Navigation({ navRef }) {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost/anime_news/admin/api/controller/category.php').then((res) => {
+      setCategories(res.data);
+    });
+  }, []);
+
   const handleCloseMenu = () => {
     navRef.current.style.transform = 'translateX(-100%)';
     navRef.current.style.transition = 'all linear .4s';
@@ -18,60 +29,53 @@ function Navigation({ navRef }) {
         <div onClick={handleCloseMenu} className="self-end my-4 mr-8 dark:text-white">
           <FontAwesomeIcon icon={faXmark} className="text-lg cursor-pointer p-2" />
         </div>
-        <div className="my-4 mx-8 dark:text-white">
-          <ul>
+        <div className="flex flex-col my-4 mx-8 dark:text-white">
+          <ul className="max-h-[20rem] overflow-y-scroll">
             <Link to="/">
               <li
                 onClick={handleCloseMenu}
-                className="p-5 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
+                className="p-5 mr-2 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
               >
                 Trang Chủ
               </li>
             </Link>
-            <Link to="/tin-tuc-anime">
-              <li
-                onClick={handleCloseMenu}
-                className="p-5 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
-              >
-                Tin Tức Anime
-              </li>
-            </Link>
-            <Link to="/tin-tuc-manga">
-              <li
-                onClick={handleCloseMenu}
-                className="p-5 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
-              >
-                Tin Tức Manga
-              </li>
-            </Link>
-            <Link to="/tin-tuc-nhan-vat">
-              <li
-                onClick={handleCloseMenu}
-                className="p-5 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
-              >
-                Tin Tức Nhân Vật
-              </li>
-            </Link>
-            <Link to="/van-hoa-nhat-ban">
-              <li
-                onClick={handleCloseMenu}
-                className="p-5 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
-              >
-                Văn Hoá Nhật Bản
-              </li>
-            </Link>
-            <Link to="/tin-tuc-cosplay">
-              <li
-                onClick={handleCloseMenu}
-                className="p-5 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
-              >
-                Cosplay
-              </li>
-            </Link>
-            <li className="py-5 ">
-              <img src={navbarImage} alt="navbar-img" className="rounded-lg w-full" />
-            </li>
+
+            {categories.map((category) => {
+              let href = '';
+              switch (category.id) {
+                case '7':
+                  href = '/tin-tuc-anime';
+                  break;
+                case '9':
+                  href = '/tin-tuc-nhan-vat';
+                  break;
+                case '10':
+                  href = '/tin-tuc-manga';
+                  break;
+                case '11':
+                  href = '/van-hoa-nhat-ban';
+                  break;
+                case '12':
+                  href = '/tin-tuc-cosplay';
+                  break;
+                default:
+                  break;
+              }
+              return (
+                <Link key={category.id} to={href}>
+                  <li
+                    onClick={handleCloseMenu}
+                    className="p-5 mr-2 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
+                  >
+                    {category.name}
+                  </li>
+                </Link>
+              );
+            })}
           </ul>
+          <p className="py-5 ">
+            <img src={navbarImage} alt="navbar-img" className="rounded-lg w-full" />
+          </p>
         </div>
       </div>
     </nav>
