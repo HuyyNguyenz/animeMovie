@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { faBars, faCircle, faRightFromBracket, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useDarkMode from '../../../hooks/useDarkMode';
-import Navigation from '../Navigation/Navigation';
+import Navigation from '../Navigation';
 
 function Header() {
   const [isLogin, setLogin] = useState(() => {
@@ -18,6 +18,7 @@ function Header() {
   const [searchValue, setSearchValue] = useState('');
   const [isDarkMode, toggleDarkMode] = useDarkMode();
   const navRef = useRef();
+  const navigate = useNavigate();
 
   const handleOpenMenu = () => {
     navRef.current.style.transform = 'translateX(0)';
@@ -29,10 +30,12 @@ function Header() {
       if (localStorage.getItem('user_token')) {
         localStorage.removeItem('user_token');
         setLogin(false);
+        navigate('/');
         window.location.reload();
       } else {
         sessionStorage.removeItem('user_token');
         setLogin(false);
+        navigate('/');
         window.location.reload();
       }
     }, 1000);
@@ -94,8 +97,10 @@ function Header() {
             <div className="block">
               {isLogin ? (
                 <div className="px-2 flex items-center">
-                  <h1 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h1>
-                  <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}></button>
+                  <h3 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h3>
+                  <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
+                    <FontAwesomeIcon icon={faRightFromBracket} />
+                  </button>
                 </div>
               ) : (
                 <Link to="/login-page">
@@ -119,8 +124,7 @@ function Header() {
                 <div className="px-2 flex items-center">
                   <h3 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h3>
                   <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
-                    {/* <FontAwesomeIcon icon={faRightFromBracket} /> */}
-                    Log out
+                    <FontAwesomeIcon icon={faRightFromBracket} />
                   </button>
                 </div>
               ) : (

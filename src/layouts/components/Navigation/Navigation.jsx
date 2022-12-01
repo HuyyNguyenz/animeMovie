@@ -8,12 +8,22 @@ import navbarImage from '../../../assets/images/image-navbar.jpg';
 
 function Navigation({ navRef }) {
   const [categories, setCategories] = useState([]);
+  const [isLogin] = useState(() => {
+    const userToken = localStorage.getItem('user_token')
+      ? localStorage.getItem('user_token')
+      : sessionStorage.getItem('user_token');
+    return userToken;
+  });
 
   useEffect(() => {
+    handleGetCategories();
+  }, []);
+
+  const handleGetCategories = () => {
     axios.get('http://localhost/anime_news/admin/api/controller/category.php').then((res) => {
       setCategories(res.data);
     });
-  }, []);
+  };
 
   const handleCloseMenu = () => {
     navRef.current.style.transform = 'translateX(-100%)';
@@ -39,6 +49,19 @@ function Navigation({ navRef }) {
                 Trang Chủ
               </li>
             </Link>
+
+            {isLogin ? (
+              <Link to="/thong-tin-tai-khoan">
+                <li
+                  onClick={handleCloseMenu}
+                  className="p-5 mr-2 cursor-pointer hover:bg-navbar-hover-color rounded-lg transition-all ease-linear delay-75 dark:hover:bg-dark-mode-hover"
+                >
+                  Trang Cá Nhân
+                </li>
+              </Link>
+            ) : (
+              ''
+            )}
 
             {categories.map((category) => {
               let href = '';

@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
-import { publicRoutes } from './routes';
+import { publicRoutes, privateRoutes } from './routes';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const userToken = localStorage.getItem('user_token')
+  ? localStorage.getItem('user_token')
+  : sessionStorage.getItem('user_token');
 root.render(
   <React.StrictMode>
     <Router>
@@ -14,6 +17,12 @@ root.render(
           const Page = route.component;
           return <Route key={index} path={route.path} element={Page} />;
         })}
+        {userToken
+          ? privateRoutes.map((route, index) => {
+              const Page = route.component;
+              return <Route key={index} path={route.path} element={Page} />;
+            })
+          : ''}
       </Routes>
     </Router>
   </React.StrictMode>,

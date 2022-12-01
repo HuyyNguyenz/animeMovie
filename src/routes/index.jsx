@@ -7,6 +7,7 @@ import CharNews from '../pages/CharNews';
 import CultureNews from '../pages/CultureNews';
 import CosplayNews from '../pages/CosplayNews';
 import DetailPost from '../pages/DetailPost';
+import DetailUser from '../pages/DetailUser';
 
 const publicRoutes = [
   { path: '/', component: <Home /> },
@@ -24,6 +25,6 @@ const publicRoutes = [
   { path: '/tin-tuc-cosplay/:newsTitlte/:newsId', component: <DetailPost /> },
 ];
 
-const privateRoutes = [];
+const privateRoutes = [{ path: '/thong-tin-tai-khoan', component: <DetailUser /> }];
 
 export { publicRoutes, privateRoutes };

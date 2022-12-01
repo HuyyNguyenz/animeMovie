@@ -11,7 +11,6 @@ import registerImg from '../../assets/images/image-register.jpg';
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 
 function Register() {
-  const username = document.getElementById('username');
   const navigate = useNavigate();
   const [data, setData] = useState({
     username: '',
