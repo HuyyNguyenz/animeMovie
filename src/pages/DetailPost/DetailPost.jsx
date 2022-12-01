@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import PopularLayout from '../../layouts/PopularLayout';
 import DefaultLayout from '../../layouts/DefaultLayout';
@@ -21,6 +23,15 @@ function DetailPost() {
   const [isUpdate, setUpdate] = useState(false);
   const scrollCommentRef = useRef();
   const params = useParams();
+  const notify = (content, { type, time }) => {
+    switch (type) {
+      case 'INFO':
+        toast.info(content, { autoClose: time, position: toast.POSITION.BOTTOM_LEFT });
+        break;
+      default:
+        break;
+    }
+  };
 
   useEffect(() => {
     handleGetUser();
@@ -103,7 +114,7 @@ function DetailPost() {
         }
       });
       setComment('');
-    } else alert('Xin mời bạn nhập nội dung');
+    } else notify('Xin mời bạn nhập nội dung', { type: 'INFO', time: 2000 });
   };
 
   const handleDeleteComment = (id) => {
@@ -137,7 +148,7 @@ function DetailPost() {
       setTypeSubmit('Post Comment');
       localStorage.removeItem('comment_id');
       setUpdate(false);
-    } else alert('Xin mời bạn nhập nội dung');
+    } else notify('Xin mời bạn nhập nội dung', { type: 'INFO', time: 2000 });
   };
 
   const handleEdit = (id, content) => {
@@ -289,6 +300,7 @@ function DetailPost() {
           <PopularLayout data={suggestNews} title="Tin Tức Gợi Ý" />
         </section>
       </div>
+      <ToastContainer />
     </DefaultLayout>
   );
 }

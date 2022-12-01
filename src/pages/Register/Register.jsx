@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-import registerImg from '../../assets/images/image-register.jpg';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
+
+import registerImg from '../../assets/images/image-register.jpg';
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 
 function Register() {
+  const username = document.getElementById('username');
   const navigate = useNavigate();
   const [data, setData] = useState({
     username: '',
@@ -18,6 +21,19 @@ function Register() {
     lastName: '',
   });
 
+  const notify = (content, { type, time }) => {
+    switch (type) {
+      case 'SUCCESS':
+        toast.success(content, { position: toast.POSITION.TOP_CENTER, autoClose: time });
+        break;
+      case 'ERROR':
+        toast.error(content, { position: toast.POSITION.TOP_CENTER, autoClose: time });
+        break;
+      default:
+        break;
+    }
+  };
+
   const handleChanged = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -26,11 +42,11 @@ function Register() {
     e.preventDefault();
     axios.post('http://localhost/anime_news/admin/api/controller/register.php', data).then((res) => {
       if (res.data.status === 1) {
+        notify('Đăng ký tài khoản thành công', { type: 'SUCCESS', time: 1000 });
         setTimeout(() => {
-          alert('Đăng ký tài khoản thành công');
           navigate('/login-page');
-        }, 1000);
-      } else alert('Username hoặc Email đã được đăng ký');
+        }, 2000);
+      } else notify('Username hoặc Email đã tồn tại', { type: 'ERROR', time: 2000 });
     });
   };
 
@@ -138,6 +154,7 @@ function Register() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </DefaultLayout>
   );
 }

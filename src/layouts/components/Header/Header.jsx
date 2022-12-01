@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import { faBars, faCircle, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCircle, faRightFromBracket, faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import useDarkMode from '../../../hooks/useDarkMode';
 import Navigation from '../Navigation/Navigation';
@@ -95,9 +95,7 @@ function Header() {
               {isLogin ? (
                 <div className="px-2 flex items-center">
                   <h1 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h1>
-                  <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
-                    Log out
-                  </button>
+                  <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}></button>
                 </div>
               ) : (
                 <Link to="/login-page">
@@ -121,6 +119,7 @@ function Header() {
                 <div className="px-2 flex items-center">
                   <h3 className="font-bold mr-2 dark:text-white">Hi, {userData.username}</h3>
                   <button className="cursor-pointer hover:underline dark:text-white" onClick={handleLogOut}>
+                    {/* <FontAwesomeIcon icon={faRightFromBracket} /> */}
                     Log out
                   </button>
                 </div>
