@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 import loginImg from '../../assets/images/image-login.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,6 +16,18 @@ function Login() {
     remember: false,
   });
   const navigate = useNavigate();
+  const notify = (content, { type, time }) => {
+    switch (type) {
+      case 'INFO':
+        toast.info(content, { autoClose: time, position: toast.POSITION.TOP_CENTER });
+        break;
+      case 'ERROR':
+        toast.error(content, { autoClose: time, position: toast.POSITION.TOP_CENTER });
+        break;
+      default:
+        break;
+    }
+  };
 
   const checkAccount = () => {
     axios.post('http://localhost/anime_news/admin/api/controller/userLogin.php', data).then((res) => {
@@ -36,9 +49,9 @@ function Login() {
         }
       } else {
         if (res.data.lock === 1) {
-          alert(res.data.message);
+          notify(res.data.message, { type: 'INFO', time: 1000 });
         } else {
-          alert(res.data.message);
+          notify(res.data.message, { type: 'ERROR', time: 1500 });
         }
       }
     });
@@ -126,6 +139,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </DefaultLayout>
   );
 }

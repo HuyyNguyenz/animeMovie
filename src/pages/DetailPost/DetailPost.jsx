@@ -35,8 +35,8 @@ function DetailPost() {
 
   useEffect(() => {
     handleGetUser();
-    handleGetComments();
     handleGetNews();
+    handleGetComments();
     handleGetSuggestNews();
   }, [news.id, params]);
 
@@ -136,12 +136,11 @@ function DetailPost() {
         accountName: userData.username,
         datePosted: datePosted,
         accountId: userData.id,
+        newsId: news.id,
       };
       axios.put(`http://localhost/anime_news/admin/api/controller/comment.php/${commentId}/edit`, data).then((res) => {
-        if (res.data.status === 1) {
+        if (res.data.status) {
           handleGetComments();
-        } else {
-          console.log('Failed');
         }
       });
       setComment('');
