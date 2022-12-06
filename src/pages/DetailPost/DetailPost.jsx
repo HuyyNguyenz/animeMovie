@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import PopularLayout from '../../layouts/PopularLayout';
 import DefaultLayout from '../../layouts/DefaultLayout';
+import userImage from '../../assets/images/user.png';
 
 function DetailPost() {
   const [comment, setComment] = useState('');
@@ -104,6 +105,7 @@ function DetailPost() {
         datePosted: datePosted,
         accountId: userData.id,
         newsId: news.id,
+        accountAvatar: userData.avatar,
       };
       axios.post('http://localhost/anime_news/admin/api/controller/comment.php', data).then((res) => {
         if (res.data.status === 1) {
@@ -133,13 +135,10 @@ function DetailPost() {
       const data = {
         id: commentId,
         content: comment,
-        accountName: userData.username,
         datePosted: datePosted,
-        accountId: userData.id,
-        newsId: news.id,
       };
-      axios.put(`http://localhost/anime_news/admin/api/controller/comment.php/${commentId}/edit`, data).then((res) => {
-        if (res.data.status) {
+      axios.put(`http://localhost/anime_news/admin/api/controller/comment.php/edit`, data).then((res) => {
+        if (res.data.status === 1) {
           handleGetComments();
         }
       });
@@ -218,11 +217,15 @@ function DetailPost() {
             <div ref={scrollCommentRef} className="overflow-y-scroll max-h-[31.25rem] mb-4">
               {Array.from(commentData).map((data) => (
                 <div key={data.id} className="flex items-start mb-4 mr-4">
-                  <div className="w-10 h-10 mr-2">
+                  <div className="w-12 h-12 mr-2">
                     <img
-                      className="w-full h-full rounded-full"
-                      src="https://secure.gravatar.com/avatar/29a258fbb2d69d21b675424f7bf8ae90?s=100&d=mm&r=g"
-                      alt="user"
+                      className="w-full h-full rounded-full object-cover"
+                      src={
+                        data.account_avatar
+                          ? `http://localhost/anime_news/admin/api/uploads/user_images/${data.account_avatar}`
+                          : userImage
+                      }
+                      alt="user_avatar"
                     />
                   </div>
                   <div className="flex flex-col w-full">

@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 import DefaultLayout from '../../layouts/DefaultLayout';
+import userImage from '../../assets/images/user.png';
+import md5 from 'md5';
 
 function DetailUser() {
   const [userData, setUserData] = useState({});
+  const [fileUpload, setFileUpload] = useState({});
   const [updateData, setUpdateData] = useState({
     email: '',
     oldPassword: '',
@@ -17,7 +21,23 @@ function DetailUser() {
 
   useEffect(() => {
     handleGetUser();
-  }, []);
+  }, [userData]);
+
+  const notify = (content, { type, time }) => {
+    switch (type) {
+      case 'SUCCESS':
+        toast.success(content, { autoClose: time, position: toast.POSITION.TOP_LEFT });
+        break;
+      case 'INFO':
+        toast.info(content, { autoClose: time, position: toast.POSITION.TOP_LEFT });
+        break;
+      case 'ERROR':
+        toast.error(content, { autoClose: time, position: toast.POSITION.TOP_LEFT });
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleGetUser = () => {
     const id = localStorage.getItem('user_token')
@@ -32,9 +52,65 @@ function DetailUser() {
     setUpdateData({ ...updateData, [e.target.name]: e.target.value });
   };
 
+  const handleChangedFile = (e) => {
+    setFileUpload({ [e.target.name]: { files: e.target.files[0] } });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(updateData);
+    const oldPassword = md5(updateData.oldPassword);
+    const currentPassword = userData.password;
+    if (oldPassword === currentPassword && updateData.newPassword !== '') {
+      const data = {
+        id: userData.id,
+        email: updateData.email ? updateData.email : userData.email,
+        password: updateData.newPassword,
+        firstName: updateData.firstName ? updateData.firstName : userData.first_name,
+        lastName: updateData.lastName ? updateData.lastName : userData.last_name,
+        userImage: fileUpload.userImage ? fileUpload.userImage.files.name : null,
+      };
+      if (data.userImage !== null) {
+        const formData = new FormData();
+        formData.append('userImage', fileUpload.userImage.files);
+        axios.post('http://localhost/anime_news/admin/api/controller/uploadFile.php', formData).then((res) => {
+          console.log(res.data);
+        });
+      }
+      axios.put('http://localhost/anime_news/admin/api/controller/register.php', data).then((res) => {
+        if (res.data.status === 1) {
+          handleGetUser();
+        }
+      });
+      notify('Cập nhật tài khoản thành công', { type: 'SUCCESS', time: 2000 });
+    } else if (updateData.oldPassword === '' && updateData.newPassword === '') {
+      const data = {
+        id: userData.id,
+        email: updateData.email ? updateData.email : userData.email,
+        password: currentPassword,
+        firstName: updateData.firstName ? updateData.firstName : userData.first_name,
+        lastName: updateData.lastName ? updateData.lastName : userData.last_name,
+        userImage: fileUpload.userImage ? fileUpload.userImage.files.name : null,
+      };
+      if (data.userImage !== null) {
+        const formData = new FormData();
+        formData.append('userImage', fileUpload.userImage.files);
+        axios.post('http://localhost/anime_news/admin/api/controller/uploadFile.php', formData).then((res) => {
+          console.log(res.data);
+        });
+      }
+      axios.put('http://localhost/anime_news/admin/api/controller/register.php', data).then((res) => {
+        if (res.data.status === 1) {
+          handleGetUser();
+        }
+      });
+      notify('Cập nhật tài khoản thành công', { type: 'SUCCESS', time: 2000 });
+    } else if (updateData.oldPassword === '' && updateData.newPassword !== '') {
+      notify('Xin mời bạn nhập mật khẩu cũ', { type: 'INFO', time: 1500 });
+    } else if (updateData.oldPassword !== '' && updateData.newPassword === '') {
+      notify('Xin mời bạn nhập mật khẩu mới', { type: 'INFO', time: 1500 });
+    } else {
+      notify('Mật khẩu cũ không trùng khớp', { type: 'ERROR', time: 1500 });
+    }
   };
 
   return (
@@ -44,10 +120,14 @@ function DetailUser() {
           <h1>Trang Cá Nhân</h1>
         </div>
         <div className="flex flex-col items-center justify-center">
-          <div className="w-40 h-40">
+          <div className="w-36 h-36">
             <img
               className="w-full h-full object-cover rounded-full"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+              src={
+                userData.avatar
+                  ? `http://localhost/anime_news/admin/api/uploads/user_images/${userData.avatar}`
+                  : userImage
+              }
               alt="user_avatar"
             />
           </div>
@@ -65,7 +145,12 @@ function DetailUser() {
           </div>
           {isEdit ? (
             <div>
-              <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center" action="POST">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-center justify-center"
+                action="POST"
+                encType="multipart/form-data"
+              >
                 <div className="flex flex-col w-full">
                   <label className="mb-2" htmlFor="email">
                     Email:
@@ -84,6 +169,7 @@ function DetailUser() {
                     Old Password:
                   </label>
                   <input
+                    minLength={6}
                     className="mb-2 outline-none w-full border border-solid border-[#ddd] rounded-md px-3 py-2 text-text-color"
                     onChange={handleChanged}
                     type="password"
@@ -97,6 +183,7 @@ function DetailUser() {
                     New Password:
                   </label>
                   <input
+                    minLength={6}
                     className="mb-2 outline-none w-full border border-solid border-[#ddd] rounded-md px-3 py-2 text-text-color"
                     onChange={handleChanged}
                     type="password"
@@ -136,7 +223,7 @@ function DetailUser() {
                     User Image:
                   </label>
                   <input
-                    onChange={handleChanged}
+                    onChange={handleChangedFile}
                     className="mb-2 outline-none w-full border border-solid border-[#ddd] rounded-md px-3 py-2 text-text-color"
                     type="file"
                     name="userImage"
@@ -162,6 +249,7 @@ function DetailUser() {
           </button>
         </div>
       </div>
+      <ToastContainer />
     </DefaultLayout>
   );
 }

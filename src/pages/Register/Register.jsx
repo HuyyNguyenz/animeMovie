@@ -41,10 +41,10 @@ function Register() {
     e.preventDefault();
     axios.post('http://localhost/anime_news/admin/api/controller/register.php', data).then((res) => {
       if (res.data.status === 1) {
-        notify('Đăng ký tài khoản thành công', { type: 'SUCCESS', time: 1000 });
+        notify('Đăng ký tài khoản thành công', { type: 'SUCCESS', time: 2000 });
         setTimeout(() => {
           navigate('/login-page');
-        }, 2000);
+        }, 3000);
       } else notify('Username hoặc Email đã tồn tại', { type: 'ERROR', time: 2000 });
     });
   };
