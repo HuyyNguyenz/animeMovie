@@ -8,7 +8,7 @@ import SectionPreview from '../../layouts/components/SectionPreview';
 function CosplayNews() {
   const [data, setData] = useState({});
   useEffect(() => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/12').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/cosplay').then((res) => {
       setData(res.data);
     });
   }, []);

@@ -8,7 +8,7 @@ import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 function MangaNews() {
   const [data, setData] = useState({});
   useEffect(() => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/10').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/manga').then((res) => {
       setData(res.data);
     });
   }, []);

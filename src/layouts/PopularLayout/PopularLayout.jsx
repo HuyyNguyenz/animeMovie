@@ -11,19 +11,19 @@ function PopularLayout({ data, title }) {
       {data.map((item) => {
         let path = '';
         switch (item.category_id) {
-          case '7':
+          case 'anime':
             path = 'tin-tuc-anime';
             break;
-          case '9':
+          case 'characters':
             path = 'tin-tuc-nhan-vat';
             break;
-          case '10':
+          case 'manga':
             path = 'tin-tuc-manga';
             break;
-          case '11':
+          case 'culture':
             path = 'van-hoa-nhat-ban';
             break;
-          case '12':
+          case 'cosplay':
             path = 'tin-tuc-cosplay';
             break;
           default:

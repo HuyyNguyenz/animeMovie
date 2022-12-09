@@ -46,30 +46,30 @@ function Home() {
       const pathArray = [];
       randomNews.forEach((news) => {
         switch (news.category_id) {
-          case '7':
-            pathArray.push({ category_id: '7', to: `/tin-tuc-anime/${news.title}/${news.id}` });
+          case 'anime':
+            pathArray.push({ category_id: 'anime', to: `/tin-tuc-anime/${news.title}/${news.id}` });
             break;
-          case '9':
+          case 'characters':
             pathArray.push({
-              category_id: '9',
+              category_id: 'characters',
               to: `/tin-tuc-nhan-vat/${news.title}/${news.id}`,
             });
             break;
-          case '10':
+          case 'manga':
             pathArray.push({
-              category_id: '10',
+              category_id: 'manga',
               to: `/tin-tuc-manga/${news.title}/${news.id}`,
             });
             break;
-          case '11':
+          case 'culture':
             pathArray.push({
-              category_id: '11',
+              category_id: 'culture',
               to: `/van-hoa-nhat-ban/${news.title}/${news.id}`,
             });
             break;
-          case '12':
+          case 'cosplay':
             pathArray.push({
-              category_id: '12',
+              category_id: 'cosplay',
               to: `/tin-tuc-cosplay/${news.title}/${news.id}`,
             });
             break;
@@ -82,7 +82,7 @@ function Home() {
   };
 
   const handleGetMangaNews = () => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/10').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/manga').then((res) => {
       let randomArray = [];
       let randomNews = [];
       for (let i = 0; i < 6; i++) {
@@ -101,25 +101,25 @@ function Home() {
   };
 
   const handleGetAnimeNews = () => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/7').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/anime').then((res) => {
       setAnimeNews(res.data);
     });
   };
 
   const handleGetCosplayNews = () => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/12').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/cosplay').then((res) => {
       setCosplayNews(res.data);
     });
   };
 
   const handleGetCharactersNews = () => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/9').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/characters').then((res) => {
       setCharactersNews(res.data);
     });
   };
 
   const handleGetCultureNews = () => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/11').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/culture').then((res) => {
       setCultureNews(res.data);
     });
   };

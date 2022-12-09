@@ -66,19 +66,19 @@ function Navigation({ navRef }) {
             {categories.map((category) => {
               let href = '';
               switch (category.id) {
-                case '7':
+                case 'anime':
                   href = '/tin-tuc-anime';
                   break;
-                case '9':
+                case 'characters':
                   href = '/tin-tuc-nhan-vat';
                   break;
-                case '10':
+                case 'manga':
                   href = '/tin-tuc-manga';
                   break;
-                case '11':
+                case 'culture':
                   href = '/van-hoa-nhat-ban';
                   break;
-                case '12':
+                case 'cosplay':
                   href = '/tin-tuc-cosplay';
                   break;
                 default:

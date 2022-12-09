@@ -8,7 +8,7 @@ import SectionPreview from '../../layouts/components/SectionPreview';
 function CultureNews() {
   const [data, setData] = useState({});
   useEffect(() => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/11').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/culture').then((res) => {
       setData(res.data);
     });
   }, []);

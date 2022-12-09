@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function AnimeNews() {
   const [data, setData] = useState({});
   useEffect(() => {
-    axios.get('http://localhost/anime_news/admin/api/controller/news.php/7').then((res) => {
+    axios.get('http://localhost/anime_news/admin/api/controller/news.php/anime').then((res) => {
       setData(res.data);
     });
   }, []);
