@@ -1,8 +1,9 @@
+import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from 'react-helmet';
 
 import PopularLayout from '../../layouts/PopularLayout';
 import DefaultLayout from '../../layouts/DefaultLayout';
@@ -20,7 +21,8 @@ function DetailPost() {
     return !!userToken;
   });
   const [userData, setUserData] = useState({});
-  const [commentData, setCommentData] = useState({});
+  const [comments, setComments] = useState([]);
+  const [users, setUsers] = useState([]);
   const [isUpdate, setUpdate] = useState(false);
   const scrollCommentRef = useRef();
   const params = useParams();
@@ -35,13 +37,14 @@ function DetailPost() {
   };
 
   useEffect(() => {
-    handleGetUser();
+    handleGetUserLogin();
     handleGetNews();
     handleGetComments();
+    handleGetUsers();
     handleGetSuggestNews();
   }, [news.id, params]);
 
-  const handleGetUser = () => {
+  const handleGetUserLogin = () => {
     const id = localStorage.getItem('user_token')
       ? localStorage.getItem('user_token')
       : sessionStorage.getItem('user_token');
@@ -55,9 +58,15 @@ function DetailPost() {
     // Call API get comment data
     if (news.id) {
       axios.get(`http://localhost/anime_news/admin/api/controller/comment.php/${news.id}`).then((res) => {
-        setCommentData(res.data);
+        setComments(res.data);
       });
     }
+  };
+
+  const handleGetUsers = () => {
+    axios.get('http://localhost/anime_news/admin/api/controller/register.php').then((res) => {
+      setUsers(res.data);
+    });
   };
 
   const handleGetNews = () => {
@@ -101,11 +110,9 @@ function DetailPost() {
       const datePosted = handleGetCurrentDateTime();
       const data = {
         content: comment,
-        accountName: userData.username,
         datePosted: datePosted,
         accountId: userData.id,
         newsId: news.id,
-        accountAvatar: userData.avatar,
       };
       axios.post('http://localhost/anime_news/admin/api/controller/comment.php', data).then((res) => {
         if (res.data.status === 1) {
@@ -158,6 +165,9 @@ function DetailPost() {
 
   return (
     <DefaultLayout loading={params}>
+      <Helmet>
+        <title>{news.title}</title>
+      </Helmet>
       <div className="py-20 px-8 max-w-[75rem] mx-auto md:flex dark:text-white">
         <section className="max-w-[46.25rem] md:mr-8">
           <div className="flex flex-col">
@@ -210,50 +220,70 @@ function DetailPost() {
 
             <div className="text-base mb-4">
               <p>
-                <span className="mr-1">{commentData.length}</span>Comments
+                <span className="mr-1">{comments.length}</span>Comments
               </p>
             </div>
 
             <div ref={scrollCommentRef} className="overflow-y-scroll max-h-[31.25rem] mb-4">
-              {Array.from(commentData).map((data) => (
-                <div key={data.id} className="flex items-start mb-4 mr-4">
-                  <div className="w-12 h-12 mr-2">
-                    <img
-                      className="w-full h-full rounded-full object-cover"
-                      src={
-                        data.account_avatar
-                          ? `http://localhost/anime_news/admin/api/uploads/user_images/${data.account_avatar}`
-                          : userImage
-                      }
-                      alt="user_avatar"
-                    />
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <div className="flex-1 text-base bg-navbar-bg-color px-4 pt-2 pb-4 rounded-lg dark:bg-dark-mode-5">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-bold mb-1">{data.account_name}</h3>
-                        <span>{data.date_posted}</span>
+              {comments
+                ? Array.from(comments).map((data) => (
+                    <div key={data.id} className="flex items-start mb-4 mr-4">
+                      <div className="w-12 h-12 mr-2">
+                        {users.map((user) => {
+                          let image;
+                          if (user.id === data.account_id) {
+                            image = user.avatar ? (
+                              <img
+                                className="w-full h-full rounded-full object-cover"
+                                src={`http://localhost/anime_news/admin/api/uploads/user_images/${user.avatar}`}
+                                alt="user_avatar"
+                              />
+                            ) : (
+                              <img
+                                className="w-full h-full rounded-full object-cover"
+                                src={userImage}
+                                alt="user_avatar"
+                              />
+                            );
+                          }
+                          return image;
+                        })}
                       </div>
-                      <p className="max-w-[13.75rem] sm:max-w-[25rem] md:max-w-[17.5rem] lg:max-w-[31.25rem] break-words">
-                        {data.content}
-                      </p>
-                    </div>
+                      <div className="flex flex-col w-full">
+                        <div className="flex-1 text-base bg-navbar-bg-color px-4 pt-2 pb-4 rounded-lg dark:bg-dark-mode-5">
+                          <div className="flex items-center justify-between">
+                            <h3 className="font-bold mb-1">
+                              {users.map((user) => {
+                                let username = '';
+                                if (user.id === data.account_id) {
+                                  username = user.username;
+                                }
+                                return username;
+                              })}
+                            </h3>
+                            <span>{data.date_posted}</span>
+                          </div>
+                          <p className="max-w-[13.75rem] sm:max-w-[25rem] md:max-w-[17.5rem] lg:max-w-[31.25rem] break-words">
+                            {data.content}
+                          </p>
+                        </div>
 
-                    {userData.id === data.account_id ? (
-                      <div className="flex self-end">
-                        <div onClick={() => handleDeleteComment(data.id)} className="px-2 cursor-pointer">
-                          <span>Delete</span>
-                        </div>
-                        <div onClick={() => handleEdit(data.id, data.content)} className="px-2 cursor-pointer">
-                          <span>Edit</span>
-                        </div>
+                        {userData.id === data.account_id ? (
+                          <div className="flex self-end">
+                            <div onClick={() => handleDeleteComment(data.id)} className="px-2 cursor-pointer">
+                              <span>Delete</span>
+                            </div>
+                            <div onClick={() => handleEdit(data.id, data.content)} className="px-2 cursor-pointer">
+                              <span>Edit</span>
+                            </div>
+                          </div>
+                        ) : (
+                          ''
+                        )}
                       </div>
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                </div>
-              ))}
+                    </div>
+                  ))
+                : ''}
             </div>
           </div>
 

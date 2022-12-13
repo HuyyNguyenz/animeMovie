@@ -1,12 +1,13 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from 'react-helmet';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
-
 import registerImg from '../../assets/images/image-register.jpg';
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 
@@ -51,6 +52,9 @@ function Register() {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Trang Đăng Ký Tài Khoản</title>
+      </Helmet>
       <div className="dark:bg-dark-mode-3">
         <div className="flex items-center flex-col px-8 py-4 pt-24 lg:flex-row-reverse max-w-[75rem] mx-auto">
           <div className="pb-6 overflow-hidden">

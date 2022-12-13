@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import SectionPreview from '../../layouts/components/SectionPreview';
 import PopularLayout from '../../layouts/PopularLayout';
@@ -274,6 +275,9 @@ function Home() {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Trang Tin Tức Anime Zettai</title>
+      </Helmet>
       <div className="py-20 px-8 max-w-[75rem] mx-auto dark:bg-dark-mode-3">
         <section className="mb-10">
           <div className="flex flex-col">

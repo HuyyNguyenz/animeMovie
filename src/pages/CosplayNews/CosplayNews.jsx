@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 import DefaultLayout from '../../layouts/DefaultLayout';
 import SectionPreview from '../../layouts/components/SectionPreview';
@@ -15,6 +16,9 @@ function CosplayNews() {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Trang Tin Tức Cosplay</title>
+      </Helmet>
       <section>
         <div className="py-20 px-8 max-w-[75rem] mx-auto dark:text-white">
           <div className="text-2xl font-bold mb-4">

@@ -1,10 +1,11 @@
 import axios from 'axios';
+import md5 from 'md5';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 import DefaultLayout from '../../layouts/DefaultLayout';
 import userImage from '../../assets/images/user.png';
-import md5 from 'md5';
 
 function DetailUser() {
   const [userData, setUserData] = useState({});
@@ -115,6 +116,9 @@ function DetailUser() {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Trang Cá Nhân</title>
+      </Helmet>
       <div className="py-20 px-8 max-w-[75rem] mx-auto dark:text-white">
         <div className="text-2xl font-bold mb-4">
           <h1>Trang Cá Nhân</h1>

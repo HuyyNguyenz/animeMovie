@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 import DefaultLayout from '../../layouts/DefaultLayout/DefaultLayout';
 import SectionPreview from '../../layouts/components/SectionPreview';
-import { Link } from 'react-router-dom';
 
 function AnimeNews() {
   const [data, setData] = useState({});
@@ -15,6 +16,9 @@ function AnimeNews() {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Trang Tin Tức Anime</title>
+      </Helmet>
       <section>
         <div className="py-20 px-8 max-w-[75rem] mx-auto dark:text-white">
           <div className="text-2xl font-bold mb-4">

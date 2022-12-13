@@ -1,7 +1,8 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 import loginImg from '../../assets/images/image-login.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -72,6 +73,9 @@ function Login() {
 
   return (
     <DefaultLayout>
+      <Helmet>
+        <title>Trang Đăng Nhập</title>
+      </Helmet>
       <div className="dark:bg-dark-mode-3">
         <div className="flex items-center flex-col px-8 py-4 pt-24 lg:flex-row-reverse max-w-[75rem] mx-auto">
           <div className="pb-6 overflow-hidden">
